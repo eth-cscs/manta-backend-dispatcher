@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -45,4 +47,56 @@ pub struct Member {
 pub struct XnameId {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
+}
+
+impl BootParameters {
+    /// Add a kernel parameter:
+    ///  - if kernel parameter does not exists, then it will be added,
+    /// otherwise nothing will change
+    /// Returns true if kernel params have change
+    pub fn add_kernel_params(&mut self, new_kernel_params: &str) -> bool {
+        let mut changed = false;
+        let mut params: HashMap<&str, &str> = self
+            .params
+            .split_whitespace()
+            .map(|kernel_param| kernel_param.split_once('=').unwrap_or((kernel_param, "")))
+            .map(|(key, value)| (key.trim(), value.trim()))
+            .collect();
+
+        let new_kernel_params_tuple: HashMap<&str, &str> = new_kernel_params
+            .split_whitespace()
+            .map(|kernel_param| kernel_param.split_once('=').unwrap_or((kernel_param, "")))
+            .collect();
+
+        for (key, new_value) in new_kernel_params_tuple {
+            // NOTE: do not use --> `params.entry(key).or_insert(new_value);` otherwise, I don't know
+            // how do we know if the key already exists or not
+            if params.contains_key(key) {
+                log::info!("key '{}' already exists, the new kernel parameter won't be added since it already exists", key);
+                return changed;
+            } else {
+                log::info!(
+                    "key '{}' not found, adding new kernel param with value '{}'",
+                    key,
+                    new_value
+                );
+                params.insert(key, new_value);
+                changed = true
+            }
+        }
+
+        self.params = params
+            .iter()
+            .map(|(key, value)| {
+                if !value.is_empty() {
+                    format!("{key}={value}")
+                } else {
+                    key.to_string()
+                }
+            })
+            .collect::<Vec<String>>()
+            .join(" ");
+
+        changed
+    }
 }
