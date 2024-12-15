@@ -105,7 +105,7 @@ pub trait BackendTrait {
         &self,
         auth_token: &str,
         boot_parameters: &BootParameters,
-    ) -> Result<BootParameters, Error> {
+    ) -> Result<(), Error> {
         Err(Error::Message(
             "Update boot parameters command not implemented for this backend".to_string(),
         ))
