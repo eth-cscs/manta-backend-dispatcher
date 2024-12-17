@@ -150,4 +150,11 @@ pub trait BackendTrait {
             "Add kernel parameters command not implemented for this backend".to_string(),
         ))
     }
+
+    /* // BSS/BOOTPARAMETERS
+    fn delete_kernel_params(&mut self, _new_kernel_params: &str) -> Result<bool, Error> {
+        Err(Error::Message(
+            "Delete kernel parameters command not implemented for this backend".to_string(),
+        ))
+    } */
 }
