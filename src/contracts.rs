@@ -14,16 +14,24 @@ pub trait BackendTrait {
     fn get_api_token(
         &self,
         _site_name: &str,
+    ) -> impl std::future::Future<Output = Result<String, Error>> + Send;
+    /* fn get_api_token(
+        &self,
+        _site_name: &str,
     ) -> impl std::future::Future<Output = Result<String, Error>> + Send {
         async {
             Err(Error::Message(
                 "Authentication command not implemented for this backend".to_string(),
             ))
         }
-    }
+    } */
 
     // AUTHORIZATION : HSM/GROUP
     fn get_hsm_name_available(
+        &self,
+        _jwt_token: &str,
+    ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send;
+    /* fn get_hsm_name_available(
         &self,
         _jwt_token: &str,
     ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send {
@@ -32,11 +40,16 @@ pub trait BackendTrait {
                 "Get HSM name available command not implemented for this backend".to_string(),
             ))
         }
-    }
+    } */
 
     // HSM/GROUP
     // FIXME: rename function to 'get_hsm_group_members'
     fn get_member_vec_from_hsm_name_vec(
+        &self,
+        _auth_token: &str,
+        _hsm_group_name_vec: Vec<String>,
+    ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send;
+    /* fn get_member_vec_from_hsm_name_vec(
         &self,
         _auth_token: &str,
         _hsm_group_name_vec: Vec<String>,
@@ -46,10 +59,15 @@ pub trait BackendTrait {
                 "Get group members command not implemented for this backend".to_string(),
             ))
         }
-    }
+    } */
 
     // HSM/GROUP
     fn get_hsm_map_and_filter_by_hsm_name_vec(
+        &self,
+        _auth_token: &str,
+        _hsm_name_vec: Vec<&str>,
+    ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>> + Send;
+    /* fn get_hsm_map_and_filter_by_hsm_name_vec(
         &self,
         _auth_token: &str,
         _hsm_name_vec: Vec<&str>,
@@ -60,10 +78,14 @@ pub trait BackendTrait {
                     .to_string(),
             ))
         }
-    }
+    } */
 
     // HSM/GROUP
-    fn get_all_hsm(
+    fn get_all_hsm_group(
+        &self,
+        _auth_token: &str,
+    ) -> impl std::future::Future<Output = Result<Vec<HsmGroup>, Error>> + Send;
+    /* fn get_all_hsm_group(
         &self,
         _auth_token: &str,
     ) -> impl std::future::Future<Output = Result<Vec<HsmGroup>, Error>> + Send {
@@ -72,7 +94,61 @@ pub trait BackendTrait {
                 "Get all HSM command not implemented for this backend".to_string(),
             ))
         }
-    }
+    } */
+
+    // HSM/GROUP
+    fn get_hsm_group(
+        &self,
+        _auth_token: &str,
+        _hsm_name: &str,
+    ) -> impl std::future::Future<Output = Result<HsmGroup, Error>> + Send;
+    /* fn get_hsm_group(
+        &self,
+        _auth_token: &str,
+        _hsm_name: &str,
+    ) -> impl std::future::Future<Output = Result<Vec<HsmGroup>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get HSM command not implemented for this backend".to_string(),
+            ))
+        }
+    } */
+
+    // HSM/GROUP
+    fn add_hsm_group(
+        &self,
+        _auth_token: &str,
+        _hsm_name: HsmGroup,
+    ) -> impl std::future::Future<Output = Result<HsmGroup, Error>> + Send;
+    /* fn add_hsm_group(
+        &self,
+        _auth_token: &str,
+        _hsm_name: HsmGroup,
+    ) -> impl std::future::Future<Output = Result<Vec<HsmGroup>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Create HSM command not implemented for this backend".to_string(),
+            ))
+        }
+    } */
+
+    // HSM/GROUP
+    fn delete_hsm_group(
+        &self,
+        _auth_token: &str,
+        _hsm_group_label: &str,
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+    /* fn delete_hsm_group(
+        &self,
+        _auth_token: &str,
+        _hsm_name: HsmGroup,
+    ) -> impl std::future::Future<Output = Result<Vec<HsmGroup>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Delete HSM command not implemented for this backend".to_string(),
+            ))
+        }
+    } */
 
     // PCS
     // FIXME: Create a new type PowerStatus and return Result<PowerStatus, Error>
