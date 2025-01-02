@@ -50,6 +50,13 @@ impl HsmGroup {
 
         group
     }
+
+    pub fn get_members(&self) -> Vec<String> {
+        self.members
+            .clone()
+            .map(|member| member.ids.unwrap_or_default())
+            .unwrap_or_default()
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize, Default, Clone)]
