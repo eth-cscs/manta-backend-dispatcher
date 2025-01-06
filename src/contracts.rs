@@ -81,10 +81,43 @@ pub trait BackendTrait {
     } */
 
     // HSM/GROUP
+    fn post_members(
+        &self,
+        auth_token: &str,
+        group_label: &str,
+        members: &[&str],
+    ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
+
+    // HSM/GROUP
+    fn add_members_to_group(
+        &self,
+        auth_token: &str,
+        group_label: &str,
+        members: Vec<&str>,
+    ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send;
+
+    // HSM/GROUP
+    fn delete_member_from_group(
+        &self,
+        auth_token: &str,
+        group_label: &str,
+        xname: &str,
+    ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
+
+    fn update_group_members(
+        &self,
+        auth_token: &str,
+        group_name: &str,
+        members_to_remove: &Vec<String>,
+        members_to_add: &Vec<String>,
+    ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
+
+    // HSM/GROUP
     fn get_all_hsm_group(
         &self,
         _auth_token: &str,
     ) -> impl std::future::Future<Output = Result<Vec<HsmGroup>, Error>> + Send;
+
     /* fn get_all_hsm_group(
         &self,
         _auth_token: &str,
