@@ -183,6 +183,15 @@ pub trait BackendTrait {
         }
     } */
 
+    // HSM/GROUP
+    fn migrate_group_members(
+        &self,
+        shasta_token: &str,
+        target_hsm_group_name: &str,
+        parent_hsm_group_name: &str,
+        new_target_hsm_members: Vec<&str>,
+    ) -> impl std::future::Future<Output = Result<(Vec<String>, Vec<String>), Error>> + Send;
+
     // PCS
     // FIXME: Create a new type PowerStatus and return Result<PowerStatus, Error>
     fn power_on_sync(
