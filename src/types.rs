@@ -6,7 +6,7 @@ use serde_json::Value;
 use crate::error::Error;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct HsmGroup {
+pub struct Group {
     pub label: String,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub description: Option<String>,
@@ -30,7 +30,8 @@ pub struct XnameId {
     pub id: Option<String>,
 }
 
-impl HsmGroup {
+impl Group {
+    /// Constructor
     pub fn new(label: &str, member_vec_opt: Option<Vec<&str>>) -> Self {
         let members_opt = if let Some(member_vec) = member_vec_opt {
             Some(Member {
@@ -51,6 +52,7 @@ impl HsmGroup {
         group
     }
 
+    /// Get group members
     pub fn get_members(&self) -> Vec<String> {
         self.members
             .clone()

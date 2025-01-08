@@ -4,7 +4,7 @@ use serde_json::Value;
 
 use crate::{
     error::Error,
-    types::{BootParameters, HsmGroup},
+    types::{BootParameters, Group},
 };
 
 pub trait BackendTrait {
@@ -27,7 +27,7 @@ pub trait BackendTrait {
     } */
 
     // AUTHORIZATION : HSM/GROUP
-    fn get_hsm_name_available(
+    fn get_group_name_available(
         &self,
         _jwt_token: &str,
     ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send;
@@ -43,8 +43,7 @@ pub trait BackendTrait {
     } */
 
     // HSM/GROUP
-    // FIXME: rename function to 'get_hsm_group_members'
-    fn get_member_vec_from_hsm_name_vec(
+    fn get_member_vec_from_group_name_vec(
         &self,
         _auth_token: &str,
         _hsm_group_name_vec: Vec<String>,
@@ -62,7 +61,7 @@ pub trait BackendTrait {
     } */
 
     // HSM/GROUP
-    fn get_hsm_map_and_filter_by_hsm_name_vec(
+    fn get_group_map_and_filter_by_group_vec(
         &self,
         _auth_token: &str,
         _hsm_name_vec: Vec<&str>,
@@ -113,28 +112,17 @@ pub trait BackendTrait {
     ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
 
     // HSM/GROUP
-    fn get_all_hsm_group(
+    fn get_all_groups(
         &self,
         _auth_token: &str,
-    ) -> impl std::future::Future<Output = Result<Vec<HsmGroup>, Error>> + Send;
-
-    /* fn get_all_hsm_group(
-        &self,
-        _auth_token: &str,
-    ) -> impl std::future::Future<Output = Result<Vec<HsmGroup>, Error>> + Send {
-        async {
-            Err(Error::Message(
-                "Get all HSM command not implemented for this backend".to_string(),
-            ))
-        }
-    } */
+    ) -> impl std::future::Future<Output = Result<Vec<Group>, Error>> + Send;
 
     // HSM/GROUP
-    fn get_hsm_group(
+    fn get_group(
         &self,
         _auth_token: &str,
         _hsm_name: &str,
-    ) -> impl std::future::Future<Output = Result<HsmGroup, Error>> + Send;
+    ) -> impl std::future::Future<Output = Result<Group, Error>> + Send;
     /* fn get_hsm_group(
         &self,
         _auth_token: &str,
@@ -148,11 +136,11 @@ pub trait BackendTrait {
     } */
 
     // HSM/GROUP
-    fn add_hsm_group(
+    fn add_group(
         &self,
         _auth_token: &str,
-        _hsm_name: HsmGroup,
-    ) -> impl std::future::Future<Output = Result<HsmGroup, Error>> + Send;
+        _hsm_name: Group,
+    ) -> impl std::future::Future<Output = Result<Group, Error>> + Send;
     /* fn add_hsm_group(
         &self,
         _auth_token: &str,
@@ -166,7 +154,7 @@ pub trait BackendTrait {
     } */
 
     // HSM/GROUP
-    fn delete_hsm_group(
+    fn delete_group(
         &self,
         _auth_token: &str,
         _hsm_group_label: &str,
