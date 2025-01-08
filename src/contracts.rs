@@ -103,6 +103,7 @@ pub trait BackendTrait {
         xname: &str,
     ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
 
+    // HSM/GROUP
     fn update_group_members(
         &self,
         auth_token: &str,
@@ -186,13 +187,13 @@ pub trait BackendTrait {
         &self,
         _auth_token: &str,
         _nodes: &[String],
-    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send {
-        async {
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+    /* async {
             Err(Error::Message(
                 "Power on command not implemented for this backend".to_string(),
             ))
         }
-    }
+    } */
 
     // PCS
     // FIXME: Create a new type PowerStatus and return Result<PowerStatus, Error>
@@ -201,13 +202,13 @@ pub trait BackendTrait {
         _auth_token: &str,
         _nodes: &[String],
         _force: bool,
-    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send {
-        async {
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+    /* async {
             Err(Error::Message(
                 "Power off command not implemented for this backend".to_string(),
             ))
         }
-    }
+    } */
 
     // PCS
     // FIXME: Create a new type PowerStatus and return Result<PowerStatus, Error>
@@ -216,46 +217,46 @@ pub trait BackendTrait {
         _auth_token: &str,
         _nodes: &[String],
         _force: bool,
-    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send {
-        async {
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+    /* async {
             Err(Error::Message(
                 "Power reset command not implemented for this backend".to_string(),
             ))
         }
-    }
+    } */
 
     // BSS/BOOTPARAMETERS
     fn get_bootparameters(
         &self,
         _auth_token: &str,
         _nodes: &[String],
-    ) -> impl std::future::Future<Output = Result<Vec<BootParameters>, Error>> + Send {
-        async {
+    ) -> impl std::future::Future<Output = Result<Vec<BootParameters>, Error>> + Send;
+    /* async {
             Err(Error::Message(
                 "Get boot parameters command not implemented for this backend".to_string(),
             ))
         }
-    }
+    } */
 
     // BSS/BOOTPARAMETERS
     fn update_bootparameters(
         &self,
         _auth_token: &str,
         _boot_parameters: &BootParameters,
-    ) -> impl std::future::Future<Output = Result<(), Error>> + Send {
-        async {
+    ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
+    /* async {
             Err(Error::Message(
                 "Update boot parameters command not implemented for this backend".to_string(),
             ))
         }
-    }
+    } */
 
-    // BSS/BOOTPARAMETERS
-    fn add_kernel_params(&mut self, _new_kernel_params: &str) -> Result<bool, Error> {
-        Err(Error::Message(
+    /* // BSS/BOOTPARAMETERS
+    fn add_kernel_params(&mut self, _new_kernel_params: &str) -> Result<bool, Error>;
+    /* Err(Error::Message(
             "Add kernel parameters command not implemented for this backend".to_string(),
         ))
-    }
+    } */ */
 
     /* // BSS/BOOTPARAMETERS
     fn delete_kernel_params(&mut self, _new_kernel_params: &str) -> Result<bool, Error> {
@@ -263,4 +264,10 @@ pub trait BackendTrait {
             "Delete kernel parameters command not implemented for this backend".to_string(),
         ))
     } */
+
+    fn get_member_hw_inventory(
+        &self,
+        _auth_token: &str,
+        xname: &str,
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
 }
