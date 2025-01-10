@@ -61,6 +61,187 @@ impl Group {
     }
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ComponentArray {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Components"))]
+    pub components: Option<Vec<Component>>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Component {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "ID"))]
+    pub id: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Type"))]
+    pub r#type: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "State"))]
+    pub state: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Flag"))]
+    pub flag: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Enabled"))]
+    pub enabled: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "SoftwareStatus"))]
+    pub software_status: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Role"))]
+    pub role: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "SubRole"))]
+    pub sub_role: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "NID"))]
+    pub nid: Option<usize>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Subtype"))]
+    pub subtype: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "NetType"))]
+    pub net_type: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Arch"))]
+    pub arch: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Class"))]
+    pub class: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "ReservationDisabled"))]
+    pub reservation_disabled: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Locked"))]
+    pub locked: Option<bool>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ComponentArrayPostQuery {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "ComponentIDs"))]
+    pub component_ids: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub partition: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub group: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "stateonly"))]
+    pub state_only: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "flagonly"))]
+    pub falg_only: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "roleonly"))]
+    pub role_only: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "nidonly"))]
+    pub nid_only: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub r#type: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub state: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub flag: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub enabled: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "softwarestatus"))]
+    pub software_status: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub role: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub subrole: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub subtype: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    arch: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub class: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nid: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nid_start: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nid_end: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ComponentArrayPostByNidQuery {
+    #[serde(rename(serialize = "NIDRanges"))]
+    pub nid_ranges: Vec<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub partition: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "stateonly"))]
+    pub state_only: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "flagonly"))]
+    pub falg_only: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "roleonly"))]
+    pub role_only: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "nidonly"))]
+    pub nid_only: Option<bool>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ComponentArrayPostArray {
+    #[serde(rename(serialize = "Components"))]
+    pub components: Vec<ComponentCreate>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Force"))]
+    pub force: Option<bool>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ComponentCreate {
+    #[serde(rename(serialize = "ID"))]
+    pub id: String,
+    #[serde(rename(serialize = "State"))]
+    pub state: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Flag"))]
+    pub flag: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Enabled"))]
+    pub enabled: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "SoftwareStatus"))]
+    pub software_status: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Role"))]
+    pub role: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "SubRole"))]
+    pub sub_role: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "NID"))]
+    pub nid: Option<usize>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Subtype"))]
+    pub subtype: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "NetType"))]
+    pub net_type: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Arch"))]
+    pub arch: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Class"))]
+    pub class: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ComponentPut {
+    pub component: ComponentCreate,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(rename(serialize = "Force"))]
+    pub force: Option<bool>,
+}
+
 #[derive(Debug, Serialize, Deserialize, Default, Clone)]
 pub struct BootParameters {
     #[serde(default)]

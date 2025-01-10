@@ -4,7 +4,7 @@ use serde_json::Value;
 
 use crate::{
     error::Error,
-    types::{BootParameters, Group},
+    types::{BootParameters, ComponentArray, ComponentArrayPostArray, Group},
 };
 
 pub trait BackendTrait {
@@ -265,9 +265,17 @@ pub trait BackendTrait {
         ))
     } */
 
+    // HSM/INVENTORY
     fn get_member_hw_inventory(
         &self,
         _auth_token: &str,
         xname: &str,
     ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+
+    // HSM/COMPONENT
+    fn post_nodes(
+        &self,
+        auth_token: &str,
+        component: ComponentArrayPostArray,
+    ) -> impl std::future::Future<Output = Result<ComponentArray, Error>> + Send;
 }
