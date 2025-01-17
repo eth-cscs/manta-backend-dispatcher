@@ -4,7 +4,7 @@ use serde_json::Value;
 
 use crate::{
     error::Error,
-    types::{BootParameters, ComponentArray, ComponentArrayPostArray, Group},
+    types::{BootParameters, ComponentArrayPostArray, Group, HWInventoryByLocationList},
 };
 
 pub trait BackendTrait {
@@ -80,12 +80,12 @@ pub trait BackendTrait {
     } */
 
     // HSM/GROUP
-    fn post_members(
+    fn post_member(
         &self,
         auth_token: &str,
         group_label: &str,
-        members: &[&str],
-    ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
+        members: &str,
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
 
     // HSM/GROUP
     fn add_members_to_group(
@@ -181,6 +181,39 @@ pub trait BackendTrait {
         new_target_hsm_members: Vec<&str>,
     ) -> impl std::future::Future<Output = Result<(Vec<String>, Vec<String>), Error>> + Send;
 
+    // HSM/COMPONENT
+    fn post_nodes(
+        &self,
+        auth_token: &str,
+        component: ComponentArrayPostArray,
+    ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
+
+    // HSM/COMPONENT
+    fn delete_node(
+        &self,
+        auth_token: &str,
+        id: &str,
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+
+    // HSM/INVENTORY/HARDWARE
+    fn get_inventory_hardware_query(
+        &self,
+        auth_token: &str,
+        xname: &str,
+        r#type: Option<&str>,
+        children: Option<bool>,
+        parents: Option<bool>,
+        partition: Option<&str>,
+        format: Option<&str>,
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+
+    // HSM/INVENTORY/HARDWARE
+    fn post_inventory_hardware(
+        &self,
+        auth_token: &str,
+        hardware: HWInventoryByLocationList,
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+
     // PCS
     // FIXME: Create a new type PowerStatus and return Result<PowerStatus, Error>
     fn power_on_sync(
@@ -264,18 +297,4 @@ pub trait BackendTrait {
             "Delete kernel parameters command not implemented for this backend".to_string(),
         ))
     } */
-
-    // HSM/INVENTORY
-    fn get_member_hw_inventory(
-        &self,
-        _auth_token: &str,
-        xname: &str,
-    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
-
-    // HSM/COMPONENT
-    fn post_nodes(
-        &self,
-        auth_token: &str,
-        component: ComponentArrayPostArray,
-    ) -> impl std::future::Future<Output = Result<ComponentArray, Error>> + Send;
 }
