@@ -35,7 +35,7 @@ pub struct NodeSummary {
     pub node_hsn_nics: Vec<ArtifactSummary>,
 }
 
-impl From<HWInventoryByLocation> for NodeSummary {
+/* impl From<HWInventoryByLocation> for NodeSummary {
     fn from(value: HWInventoryByLocation) -> Self {
         NodeSummary {
             xname: value.id,
@@ -178,7 +178,7 @@ impl Into<HWInventoryByLocation> for NodeSummary {
             router_bmc: None, // FIXME: implement!
         }
     }
-}
+} */
 
 impl From<HWInvByLocNode> for NodeSummary {
     fn from(value: HWInvByLocNode) -> Self {
@@ -361,6 +361,13 @@ impl Into<HWInvByLocProcessor> for ArtifactSummary {
             processor_fru_info: redfish_process_fru_info,
         };
 
+        let processor_location_info = RedfishProcessorLocationInfo {
+            id: None,
+            name: None,
+            description: None,
+            socket: None,
+        };
+
         HWInvByLocProcessor {
             id: self.xname,
             r#type: Some(self.r#type.to_string()),
@@ -368,7 +375,7 @@ impl Into<HWInvByLocProcessor> for ArtifactSummary {
             status: None,
             hw_inventory_by_location_type: self.r#type.to_string(),
             populated_fru: Some(hw_inv_by_fru_processor),
-            processor_location_info: None,
+            processor_location_info,
         }
     }
 }
@@ -414,6 +421,20 @@ impl Into<HWInvByLocMemory> for ArtifactSummary {
             memory_fru_info: redfish_memory_fru_info,
         };
 
+        let memory_location = MemoryLocation {
+            socket: None,
+            memory_controller: None,
+            channel: None,
+            slot: None,
+        };
+
+        let redfish_memory_location_info = RedfishMemoryLocationInfo {
+            id: None,
+            name: None,
+            description: None,
+            memory_location: Some(memory_location),
+        };
+
         HWInvByLocMemory {
             id: self.xname,
             r#type: Some(self.r#type.to_string()),
@@ -421,7 +442,7 @@ impl Into<HWInvByLocMemory> for ArtifactSummary {
             status: None,
             hw_inventory_by_location_type: self.r#type.to_string(),
             populated_fru: Some(hw_inv_by_fru_memory),
-            memory_location_info: None,
+            memory_location_info: redfish_memory_location_info,
         }
     }
 }
@@ -506,6 +527,12 @@ impl Into<HWInvByLocHSNNIC> for ArtifactSummary {
             hsn_nic_fru_info,
         };
 
+        let hsn_nic_location_info = HSNNICLocationInfo {
+            id: None,
+            name: None,
+            description: None,
+        };
+
         HWInvByLocHSNNIC {
             id: self.xname,
             r#type: Some(self.r#type.to_string()),
@@ -513,7 +540,7 @@ impl Into<HWInvByLocHSNNIC> for ArtifactSummary {
             status: None,
             hw_inventory_by_location_type: self.r#type.to_string(),
             populated_fru: Some(hw_inv_by_fru_hsn_nic),
-            hsn_nic_location_info: None,
+            hsn_nic_location_info,
         }
     }
 }
@@ -1726,8 +1753,7 @@ pub struct HWInvByLocProcessor {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub populated_fru: Option<HWInvByFRUProcessor>,
     #[serde(rename = "ProcessorLocationInfo")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub processor_location_info: Option<RedfishProcessorLocationInfo>,
+    pub processor_location_info: RedfishProcessorLocationInfo,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -1839,9 +1865,8 @@ pub struct HWInvByLocMemory {
     #[serde(rename = "PopulatedFRU")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub populated_fru: Option<HWInvByFRUMemory>,
-    #[serde(rename = "DriveLocationInfo")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub memory_location_info: Option<RedfishMemoryLocationInfo>,
+    #[serde(rename = "MemoryLocationInfo")]
+    pub memory_location_info: RedfishMemoryLocationInfo,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -1908,9 +1933,10 @@ pub struct HWInvByLocHSNNIC {
     #[serde(rename = "PopulatedFRU")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub populated_fru: Option<HWInvByFRUHSNNIC>,
+    /* #[serde(rename = "NodeHsnNicLocationInfo")]
+    pub node_hsn_nic_location_info: HSNNICLocationInfo, */
     #[serde(rename = "HSNNICLocationInfo")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub hsn_nic_location_info: Option<HSNNICLocationInfo>,
+    pub hsn_nic_location_info: HSNNICLocationInfo,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -2234,6 +2260,12 @@ pub struct HWInvByLocRouterBMC {
     pub router_bmc_location_info: Option<RedfishManagerLocationInfo>,
 }
 
+/* #[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct HWInventoryList {
+    #[serde(rename = "Hardware")]
+    pub hw_inventory: Vec<HWInventory>,
+} */
+
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct HWInventory {
     #[serde(rename = "XName")]
@@ -2339,94 +2371,30 @@ pub struct NodeLocationInfo {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct HWInventoryByLocation {
-    #[serde(rename = "ID")]
-    pub id: String,
-    #[serde(rename = "Type")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub r#type: Option<String>,
-    #[serde(rename = "Ordinal")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub ordinal: Option<u32>,
-    #[serde(rename = "Status")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub status: Option<String>,
-    #[serde(rename = "NodeLocationInfo")]
-    pub node_location_info: NodeLocationInfo,
-    #[serde(rename = "HWInventoryByLocationType")]
-    pub hw_inventory_by_location_type: String,
-    #[serde(rename = "PopulatedFRU")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub populated_fru: Option<HWInvByFRUNode>, // FIXME: I think the type of 'populated_fru' field
-    // should be dynamically assigned depending on the target of the hw inentory. In this case I am
-    // hardcoding it to HWInvByFRUNode because I am mostly creating 'nodes' but this should also be
-    // 'HWInvByFRUProcessor', 'HWInvByFRUMemory', etc
-    #[serde(rename = "Cabinets")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub cabinets: Option<Vec<HWInvByLocCabinet>>,
-    #[serde(rename = "Chassis")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub chassis: Option<Vec<HWInvByLocChassis>>,
-    #[serde(rename = "ComputeModules")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub compute_modules: Option<Vec<HWInvByLocComputeModule>>,
-    #[serde(rename = "RouterModules")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub router_modules: Option<Vec<HWInvByLocRouterModule>>,
-    #[serde(rename = "NodeEnclosures")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub node_enclosures: Option<Vec<HWInvByLocNodeEnclosure>>,
-    #[serde(rename = "HSNBoards")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub hsn_boards: Option<Vec<HWInvByLocHSNBoard>>,
-    #[serde(rename = "MgmtSwitches")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub mgmt_switches: Option<Vec<HWInvByLocMgmtSwitch>>,
-    #[serde(rename = "MgmtHLSwitches")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub mgmt_hl_switches: Option<Vec<HWInvByLocMgmtHLSwitch>>,
-    #[serde(rename = "CDUMgmtSwitches")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub cdu_mgmt_switches: Option<Vec<HWInvByLocCDUMgmtSwitch>>,
-    #[serde(rename = "Nodes")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub nodes: Option<Vec<HWInvByLocNode>>,
-    #[serde(rename = "Processors")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub processors: Option<Vec<HWInvByLocProcessor>>,
-    #[serde(rename = "NodeAccels")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub node_accels: Option<Vec<HWInvByLocNodeAccel>>,
-    #[serde(rename = "Drives")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub drives: Option<Vec<HWInvByLocDrive>>,
-    #[serde(rename = "Memory")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub memory: Option<Vec<HWInvByLocMemory>>,
-    #[serde(rename = "CabinetPDUs")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub cabinet_pdus: Option<Vec<HWInvByLocPDU>>,
-    #[serde(rename = "CabinetPDUPowerConnectors")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub cabinet_pdu_power_connectors: Option<Vec<HWInvByLocOutlet>>,
-    #[serde(rename = "CMMRectifiers")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub cmm_rectifiers: Option<Vec<HWInvByLocCMMRectifier>>,
-    #[serde(rename = "NodeAccelRisers")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub node_accel_risers: Option<Vec<HWInvByLocNodeAccelRiser>>,
-    #[serde(rename = "NodeHsnNICs")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub node_hsn_nics: Option<Vec<HWInvByLocHSNNIC>>,
-    #[serde(rename = "NodeEnclosurePowerSupplies")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub node_enclosure_power_supplies: Option<Vec<HWInvByLocNodePowerSupply>>,
-    #[serde(rename = "NodeBMC")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub node_bmc: Option<Vec<HWInvByLocNodeBMC>>,
-    #[serde(rename = "RouterBMC")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub router_bmc: Option<Vec<HWInvByLocRouterBMC>>,
+#[serde(untagged)] // <-- this is important. More info https://serde.rs/enum-representations.html#untagged
+pub enum HWInventoryByLocation {
+    /* HWInvByLocCabinet(HWInvByLocCabinet),
+    HWInvByLocChassis(HWInvByLocChassis),
+    HWInvByLocComputeModule(HWInvByLocComputeModule),
+    HWInvByLocRouterModule(HWInvByLocRouterModule),
+    HWInvByLocNodeEnclosure(HWInvByLocNodeEnclosure),
+    HWInvByLocHSNBoard(HWInvByLocHSNBoard),
+    HWInvByLocMgmtSwitch(HWInvByLocMgmtSwitch),
+    HWInvByLocMgmtHLSwitch(HWInvByLocMgmtHLSwitch),
+    HWInvByLocCDUMgmtSwitch(HWInvByLocCDUMgmtSwitch), */
+    HWInvByLocNode(HWInvByLocNode),
+    HWInvByLocProcessor(HWInvByLocProcessor),
+    HWInvByLocNodeAccel(HWInvByLocNodeAccel),
+    /*     HWInvByLocDrive(HWInvByLocDrive), */
+    HWInvByLocMemory(HWInvByLocMemory),
+    /* HWInvByLocPDU(HWInvByLocPDU),
+    HWInvByLocOutlet(HWInvByLocOutlet),
+    HWInvByLocCMMRectifier(HWInvByLocCMMRectifier),
+    HWInvByLocNodeAccelRiser(HWInvByLocNodeAccelRiser), */
+    HWInvByLocHSNNIC(HWInvByLocHSNNIC),
+    /* HWInvByLocNodePowerSupply(HWInvByLocNodePowerSupply),
+    HWInvByLocNodeBMC(HWInvByLocNodeBMC),
+    HWInvByLocRouterBMC(HWInvByLocRouterBMC), */
 }
 
 /// struct used in POST and GET endpoints that manage multiple instances of 'HWInventoryByLocation'
