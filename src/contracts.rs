@@ -297,4 +297,22 @@ pub trait BackendTrait {
             "Delete kernel parameters command not implemented for this backend".to_string(),
         ))
     } */
+
+    fn get_hsm_map_and_filter_by_hsm_name_vec(
+        &self,
+        auth_token: &str,
+        hsm_name_vec: Vec<&str>,
+    ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>> + Send;
+
+    /// Get list of xnames from NIDs
+    /// The list of NIDs can be:
+    ///     - comma separated list of NIDs (eg: nid000001,nid000002,nid000003)
+    ///     - regex (eg: nid00000.*)
+    ///     - hostlist (eg: nid0000[01-15])
+    fn nid_to_xname(
+        &self,
+        auth_token: &str,
+        user_input_nid: &str,
+        is_regex: bool,
+    ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send;
 }
