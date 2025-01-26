@@ -1,11 +1,11 @@
-use crate::{error::Error, types::ComponentArray};
+use crate::{error::Error, types::HardwareMetadataArray};
 
-pub trait Component {
+pub trait HardwareMetadata {
     fn get_all_nodes(
         &self,
         auth_token: &str,
         nid_only: Option<&str>,
-    ) -> impl std::future::Future<Output = Result<ComponentArray, Error>> + Send;
+    ) -> impl std::future::Future<Output = Result<HardwareMetadataArray, Error>> + Send;
 
     fn get(
         &self,
@@ -30,5 +30,5 @@ pub trait Component {
         flag_only: Option<&str>,
         role_only: Option<&str>,
         nid_only: Option<&str>,
-    ) -> impl std::future::Future<Output = Result<ComponentArray, Error>> + Send;
+    ) -> impl std::future::Future<Output = Result<HardwareMetadataArray, Error>> + Send;
 }
