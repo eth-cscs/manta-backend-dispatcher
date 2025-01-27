@@ -1,6 +1,9 @@
-use crate::{error::Error, types::HardwareMetadataArray};
+use crate::{
+    error::Error,
+    types::{Group, HardwareMetadataArray},
+};
 
-pub trait HardwareMetadata {
+pub trait HardwareMetadataTrait {
     fn get_all_nodes(
         &self,
         auth_token: &str,
@@ -31,4 +34,11 @@ pub trait HardwareMetadata {
         role_only: Option<&str>,
         nid_only: Option<&str>,
     ) -> impl std::future::Future<Output = Result<HardwareMetadataArray, Error>> + Send;
+}
+
+pub trait GroupTrait {
+    fn get_group_available(
+        &self,
+        auth_token: &str,
+    ) -> impl std::future::Future<Output = Result<Vec<Group>, Error>> + Send;
 }
