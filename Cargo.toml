@@ -1,6 +1,6 @@
 [package]
 name = "backend-dispatcher"
-version = "0.1.14"
+version = "0.1.15"
 edition = "2021"
 license-file = "LICENSE"
 description = "Traits to be developed by Mesa backends"
@@ -11,7 +11,6 @@ serde = { version = "1.0.145", features = ["derive"] }
 serde_json = "1.0"
 thiserror = "1.0.56"
 log = "0.4.17"
-log4rs = "1.2.0" # Docs about pattern encoder https://docs.rs/log4rs/0.10.0/log4rs/encode/pattern/index.html
 uuid = "1.6.1"
 strum = { version = "0.25.0", default-features = false }
 strum_macros = "0.25"

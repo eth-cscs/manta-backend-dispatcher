@@ -1,1 +1,2 @@
-pub mod hsm;
+pub mod group;
+pub mod hardware_metadata;

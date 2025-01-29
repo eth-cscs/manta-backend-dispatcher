@@ -43,43 +43,6 @@ pub trait BackendTrait {
     } */
 
     // HSM/GROUP
-    fn get_member_vec_from_group_name_vec(
-        &self,
-        _auth_token: &str,
-        _hsm_group_name_vec: Vec<String>,
-    ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send;
-    /* fn get_member_vec_from_hsm_name_vec(
-        &self,
-        _auth_token: &str,
-        _hsm_group_name_vec: Vec<String>,
-    ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send {
-        async {
-            Err(Error::Message(
-                "Get group members command not implemented for this backend".to_string(),
-            ))
-        }
-    } */
-
-    // HSM/GROUP
-    fn get_group_map_and_filter_by_group_vec(
-        &self,
-        _auth_token: &str,
-        _hsm_name_vec: Vec<&str>,
-    ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>> + Send;
-    /* fn get_hsm_map_and_filter_by_hsm_name_vec(
-        &self,
-        _auth_token: &str,
-        _hsm_name_vec: Vec<&str>,
-    ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>> + Send {
-        async {
-            Err(Error::Message(
-                "Get HSM map and filter by HSM name command not implemented for this backend"
-                    .to_string(),
-            ))
-        }
-    } */
-
-    // HSM/GROUP
     fn post_member(
         &self,
         auth_token: &str,
@@ -132,24 +95,6 @@ pub trait BackendTrait {
         async {
             Err(Error::Message(
                 "Get HSM command not implemented for this backend".to_string(),
-            ))
-        }
-    } */
-
-    // HSM/GROUP
-    fn add_group(
-        &self,
-        _auth_token: &str,
-        _hsm_name: Group,
-    ) -> impl std::future::Future<Output = Result<Group, Error>> + Send;
-    /* fn add_hsm_group(
-        &self,
-        _auth_token: &str,
-        _hsm_name: HsmGroup,
-    ) -> impl std::future::Future<Output = Result<Vec<HsmGroup>, Error>> + Send {
-        async {
-            Err(Error::Message(
-                "Create HSM command not implemented for this backend".to_string(),
             ))
         }
     } */
