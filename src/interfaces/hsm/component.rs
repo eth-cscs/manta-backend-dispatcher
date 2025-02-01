@@ -1,6 +1,11 @@
-use crate::{error::Error, types::HardwareMetadataArray};
+use serde_json::Value;
 
-pub trait HardwareMetadataTrait {
+use crate::{
+    error::Error,
+    types::{ComponentArrayPostArray, HardwareMetadataArray},
+};
+
+pub trait ComponentTrait {
     fn get_all_nodes(
         &self,
         auth_token: &str,
@@ -31,4 +36,18 @@ pub trait HardwareMetadataTrait {
         role_only: Option<&str>,
         nid_only: Option<&str>,
     ) -> impl std::future::Future<Output = Result<HardwareMetadataArray, Error>> + Send;
+
+    // HSM/COMPONENT
+    fn post_nodes(
+        &self,
+        auth_token: &str,
+        component: ComponentArrayPostArray,
+    ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
+
+    // HSM/COMPONENT
+    fn delete_node(
+        &self,
+        auth_token: &str,
+        id: &str,
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
 }
