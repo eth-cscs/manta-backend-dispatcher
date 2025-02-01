@@ -55,4 +55,41 @@ pub trait GroupTrait {
         auth_token: &str,
         hsm_name_vec: Vec<&str>,
     ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>> + Send;
+
+    fn post_member(
+        &self,
+        auth_token: &str,
+        group_label: &str,
+        members: &str,
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+
+    fn add_members_to_group(
+        &self,
+        auth_token: &str,
+        group_label: &str,
+        members: Vec<&str>,
+    ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send;
+
+    fn delete_member_from_group(
+        &self,
+        auth_token: &str,
+        group_label: &str,
+        xname: &str,
+    ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
+
+    fn update_group_members(
+        &self,
+        auth_token: &str,
+        group_name: &str,
+        members_to_remove: &Vec<String>,
+        members_to_add: &Vec<String>,
+    ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
+
+    fn migrate_group_members(
+        &self,
+        shasta_token: &str,
+        target_hsm_group_name: &str,
+        parent_hsm_group_name: &str,
+        new_target_hsm_members: Vec<&str>,
+    ) -> impl std::future::Future<Output = Result<(Vec<String>, Vec<String>), Error>> + Send;
 }
