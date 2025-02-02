@@ -615,7 +615,12 @@ pub struct XnameId {
 
 impl Group {
     /// Constructor
-    pub fn new(label: &str, member_vec_opt: Option<Vec<&str>>) -> Self {
+    pub fn new(
+        label: &str,
+        member_vec_opt: Option<Vec<&str>>,
+        tag_vec_opt: Option<Vec<String>>,
+        exclusive_opt: Option<String>,
+    ) -> Self {
         let members_opt = if let Some(member_vec) = member_vec_opt {
             Some(Member {
                 ids: Some(member_vec.iter().map(|&id| id.to_string()).collect()),
@@ -627,9 +632,9 @@ impl Group {
         let group = Self {
             label: label.to_string(),
             description: None,
-            tags: None,
+            tags: tag_vec_opt,
             members: members_opt,
-            exclusive_group: None,
+            exclusive_group: exclusive_opt,
         };
 
         group
