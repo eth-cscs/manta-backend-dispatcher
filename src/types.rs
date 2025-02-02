@@ -1227,6 +1227,60 @@ impl BootParameters {
 
         changed
     }
+
+    /// Apply a str of kernel parameters:
+    ///  - current kernel params will be ignored/removed and replaced by the new ones
+    /// Returns true if kernel params have change
+    // FIXME: integrate fixed introduced in methods 'add_kernel_param' and 'delete_kernel_param'
+    pub fn apply_kernel_params(&mut self, new_params: &str) -> bool {
+        let mut change = false;
+
+        let new_params: Vec<(&str, &str)> = new_params
+            .split_whitespace()
+            .map(|kernel_param| kernel_param.split_once('=').unwrap_or((kernel_param, "")))
+            .map(|(key, value)| (key.trim(), value.trim()))
+            .collect();
+
+        let mut params: HashMap<&str, &str> = HashMap::new();
+
+        for (new_key, new_value) in &new_params {
+            for (key, value) in params.iter_mut() {
+                if *key == *new_key {
+                    log::debug!("key '{}' found", key);
+                    if value != new_value {
+                        log::info!("changing key {} from {} to {}", key, value, new_value);
+
+                        *value = new_value;
+                        change = true
+                    } else {
+                        log::debug!("key '{}' value does not change ({})", key, value);
+                    }
+                }
+            }
+        }
+
+        if change == false {
+            log::debug!("No value change in kernel params. Checking is either new params have been added or removed");
+            if new_params.len() != params.len() {
+                log::info!("num kernel parameters have changed");
+                change = true;
+            }
+        }
+
+        self.params = new_params
+            .iter()
+            .map(|(key, value)| {
+                if !value.is_empty() {
+                    format!("{key}={value}")
+                } else {
+                    key.to_string()
+                }
+            })
+            .collect::<Vec<String>>()
+            .join(" ");
+
+        change
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
