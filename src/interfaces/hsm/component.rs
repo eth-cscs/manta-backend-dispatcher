@@ -2,7 +2,7 @@ use serde_json::Value;
 
 use crate::{
     error::Error,
-    types::{ComponentArrayPostArray, HardwareMetadataArray},
+    types::{Component, ComponentArrayPostArray, HardwareMetadataArray},
 };
 
 pub trait ComponentTrait {
@@ -36,6 +36,11 @@ pub trait ComponentTrait {
         role_only: Option<&str>,
         nid_only: Option<&str>,
     ) -> impl std::future::Future<Output = Result<HardwareMetadataArray, Error>> + Send;
+
+    fn get_node_metadata_available(
+        &self,
+        auth_token: &str,
+    ) -> impl std::future::Future<Output = Result<Vec<Component>, Error>> + Send;
 
     // HSM/COMPONENT
     fn post_nodes(
