@@ -2,7 +2,7 @@ use serde_json::Value;
 
 use crate::{
     error::Error,
-    types::{Component, ComponentArrayPostArray, HardwareMetadataArray},
+    types::{Component, ComponentArrayPostArray, NodeMetadataArray},
 };
 
 pub trait ComponentTrait {
@@ -10,7 +10,7 @@ pub trait ComponentTrait {
         &self,
         auth_token: &str,
         nid_only: Option<&str>,
-    ) -> impl std::future::Future<Output = Result<HardwareMetadataArray, Error>> + Send;
+    ) -> impl std::future::Future<Output = Result<NodeMetadataArray, Error>> + Send;
 
     fn get(
         &self,
@@ -35,7 +35,7 @@ pub trait ComponentTrait {
         flag_only: Option<&str>,
         role_only: Option<&str>,
         nid_only: Option<&str>,
-    ) -> impl std::future::Future<Output = Result<HardwareMetadataArray, Error>> + Send;
+    ) -> impl std::future::Future<Output = Result<NodeMetadataArray, Error>> + Send;
 
     fn get_node_metadata_available(
         &self,

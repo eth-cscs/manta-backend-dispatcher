@@ -650,7 +650,7 @@ impl Group {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct HardwareMetadataArray {
+pub struct NodeMetadataArray {
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(rename = "Components")]
     pub components: Option<Vec<Component>>,
@@ -2462,4 +2462,64 @@ pub struct HWInventoryByLocationList {
     #[serde(rename = "Hardware")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub hardware: Option<Vec<HWInventoryByLocation>>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Link {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub rel: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub href: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Cfs {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub configuration: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct BootSet {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub path: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub cfs: Option<Cfs>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub r#type: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub etag: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub kernel_parameters: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub node_list: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub node_roles_groups: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub node_groups: Option<Vec<String>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub arch: Option<String>, // TODO: use Arch enum instead
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub rootfs_provider: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub rootfs_provider_passthrough: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct BosSessionTemplate {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub name: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub tenant: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub description: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub enable_cfs: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub cfs: Option<Cfs>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub boot_sets: Option<HashMap<String, BootSet>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub links: Option<Vec<Link>>,
 }
