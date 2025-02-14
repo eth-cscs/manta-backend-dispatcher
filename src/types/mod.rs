@@ -1,3 +1,5 @@
+pub mod cfs;
+
 use std::{collections::HashMap, str::FromStr};
 
 use serde::{Deserialize, Serialize};
@@ -5,6 +7,26 @@ use serde_json::Value;
 use strum_macros::{AsRefStr, Display, EnumIter, EnumString, IntoStaticStr};
 
 use crate::error::Error;
+
+#[derive(Serialize, Deserialize, Debug)]
+pub enum K8sAuth {
+    Native {
+        certificate_authority_data: String,
+        client_certificate_data: String,
+        client_key_data: String,
+    },
+    Vault {
+        base_url: String,
+        secret_path: String,
+        role_id: String,
+    },
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct K8sDetails {
+    pub api_url: String,
+    pub authentication: K8sAuth,
+}
 
 // From CSM used by Manta
 #[derive(
