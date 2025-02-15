@@ -645,7 +645,7 @@ impl Group {
     ) -> Self {
         let members_opt = if let Some(member_vec) = member_vec_opt {
             Some(Member {
-                ids: member_vec_opt,
+                ids: Some(member_vec),
             })
         } else {
             None
