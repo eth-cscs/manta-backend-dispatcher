@@ -639,13 +639,13 @@ impl Group {
     /// Constructor
     pub fn new(
         label: &str,
-        member_vec_opt: Option<Vec<&str>>,
+        member_vec_opt: Option<Vec<String>>,
         tag_vec_opt: Option<Vec<String>>,
         exclusive_opt: Option<String>,
     ) -> Self {
         let members_opt = if let Some(member_vec) = member_vec_opt {
             Some(Member {
-                ids: Some(member_vec.iter().map(|&id| id.to_string()).collect()),
+                ids: member_vec_opt,
             })
         } else {
             None
