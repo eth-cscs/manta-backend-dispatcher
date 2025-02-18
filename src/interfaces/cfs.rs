@@ -1,7 +1,7 @@
 use std::future::Future;
 
 use crate::types::cfs::cfs_configuration_request::CfsConfigurationRequest;
-use crate::types::cfs::{CfsConfigurationResponse, Layer, LayerDetails};
+use crate::types::cfs::{CfsConfigurationResponse, CfsSessionPostRequest, Layer, LayerDetails};
 use crate::types::ims::Image;
 use crate::types::{BosSessionTemplate, K8sDetails};
 use crate::{error::Error, types::cfs::CfsSessionGetResponse};
@@ -9,6 +9,14 @@ use futures::AsyncBufRead;
 
 pub trait CfsTrait {
     type T: AsyncBufRead;
+
+    fn post_session(
+        &self,
+        shasta_token: &str,
+        shasta_base_url: &str,
+        shasta_root_cert: &[u8],
+        session: &CfsSessionPostRequest,
+    ) -> impl Future<Output = Result<CfsSessionGetResponse, Error>> + Send;
 
     fn get_sessions(
         &self,
@@ -54,6 +62,7 @@ pub trait CfsTrait {
         status_opt: Option<&String>,
         cfs_session_name_opt: Option<&String>,
         limit_number_opt: Option<&u8>,
+        is_succeded_opt: Option<bool>,
     ) -> impl Future<Output = Result<Vec<CfsSessionGetResponse>, Error>> + Send;
 
     fn get_session_logs_stream(

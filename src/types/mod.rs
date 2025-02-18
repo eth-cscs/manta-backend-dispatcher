@@ -1,5 +1,6 @@
 pub mod cfs;
 pub mod ims;
+pub mod kafka;
 
 use std::{collections::HashMap, str::FromStr};
 
