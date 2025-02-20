@@ -5,5 +5,7 @@ pub mod bss;
 pub mod cfs;
 pub mod hsm;
 pub mod ims;
+pub mod migrate_backup;
+pub mod migrate_restore;
 pub mod pcs;
 pub mod sat;

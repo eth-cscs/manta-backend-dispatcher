@@ -1,9 +1,6 @@
 use std::{future::Future, path::PathBuf};
 
-use crate::{
-    error::Error,
-    types::{kafka::Kafka, K8sDetails},
-};
+use crate::error::Error;
 
 pub trait ApplySessionTrait {
     fn apply_session(
