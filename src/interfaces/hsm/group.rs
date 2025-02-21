@@ -44,6 +44,12 @@ pub trait GroupTrait {
         _hsm_name: &str,
     ) -> impl std::future::Future<Output = Result<Group, Error>> + Send;
 
+    fn get_groups(
+        &self,
+        _auth_token: &str,
+        _hsm_name_vec: Option<&[&str]>,
+    ) -> impl std::future::Future<Output = Result<Vec<Group>, Error>> + Send;
+
     fn delete_group(
         &self,
         _auth_token: &str,

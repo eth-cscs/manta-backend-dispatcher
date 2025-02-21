@@ -641,6 +641,7 @@ impl Group {
     /// Constructor
     pub fn new(
         label: &str,
+        description: Option<String>,
         member_vec_opt: Option<Vec<String>>,
         tag_vec_opt: Option<Vec<String>>,
         exclusive_opt: Option<String>,
@@ -655,7 +656,7 @@ impl Group {
 
         let group = Self {
             label: label.to_string(),
-            description: None,
+            description,
             tags: tag_vec_opt,
             members: members_opt,
             exclusive_group: exclusive_opt,
