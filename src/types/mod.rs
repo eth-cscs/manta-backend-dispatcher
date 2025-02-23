@@ -49,7 +49,7 @@ pub enum ArtifactType {
     RouterBMC,
 }
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Default, Debug, Serialize, Deserialize, Clone)]
 pub struct NodeSummary {
     pub xname: String,
     pub r#type: String,

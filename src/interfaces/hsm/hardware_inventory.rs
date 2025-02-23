@@ -9,6 +9,12 @@ pub trait HardwareInventory {
         hardware: HWInventoryByLocationList,
     ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
 
+    fn get_inventory_hardware(
+        &self,
+        auth_token: &str,
+        xname: &str,
+    ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+
     fn get_inventory_hardware_query(
         &self,
         auth_token: &str,
