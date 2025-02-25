@@ -1,9 +1,8 @@
-use serde_json::Value;
-
 use crate::{
     error::Error,
     types::{Component, ComponentArrayPostArray, NodeMetadataArray},
 };
+use serde_json::Value;
 
 pub trait ComponentTrait {
     fn get_all_nodes(

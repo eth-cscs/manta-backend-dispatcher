@@ -1,4 +1,5 @@
 pub mod cfs;
+pub mod hsm;
 pub mod ims;
 pub mod kafka;
 
