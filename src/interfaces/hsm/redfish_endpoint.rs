@@ -35,6 +35,6 @@ pub trait RedfishEndpointTrait {
     fn delete_redfish_endpoint(
         &self,
         auth_token: &str,
-        redfish_endpoint: &RedfishEndpoint,
+        id: &str,
     ) -> impl Future<Output = Result<Value, Error>> + Send;
 }
