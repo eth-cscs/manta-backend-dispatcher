@@ -67,6 +67,8 @@ pub trait CfsTrait {
 
     fn get_session_logs_stream(
         &self,
+        shasta_token: &str,
+        site_name: &str,
         cfs_session_name: &str,
         k8s_api_url: &str,
         k8s: &K8sDetails,
@@ -75,6 +77,7 @@ pub trait CfsTrait {
     fn get_session_logs_stream_by_xname(
         &self,
         auth_token: &str,
+        site_name: &str,
         xname: &str,
         k8s_api_url: &str,
         k8s: &K8sDetails,

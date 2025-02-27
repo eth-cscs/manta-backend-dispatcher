@@ -10,7 +10,6 @@ pub trait SatTrait {
         shasta_root_cert: &[u8],
         vault_base_url: &str,
         vault_secret_path: &str,
-        vault_role_id: &str,
         k8s_api_url: &str,
         shasta_k8s_secrets: serde_json::Value,
         sat_file_content: String,

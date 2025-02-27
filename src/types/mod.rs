@@ -20,8 +20,6 @@ pub enum K8sAuth {
     },
     Vault {
         base_url: String,
-        secret_path: String,
-        role_id: String,
     },
 }
 
