@@ -16,7 +16,7 @@ pub enum Error {
         payload: String, // NOTE: CSM/OCHAMI Apis either returns plain text or a json therefore, we
                          // will just return a String
     },
-    #[error("ERROR - CSM: {0}")]
+    #[error("ERROR - Backend: {0}")]
     CsmError(Value),
     #[error("ERROR - Console: {0}")]
     ConsoleError(String),
