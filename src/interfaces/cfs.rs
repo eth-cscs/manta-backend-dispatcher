@@ -108,6 +108,7 @@ pub trait CfsTrait {
         gitea_base_url: &str,
         gitea_token: &str,
         layer: Layer,
+        site_name: &str, // FIXME: Should we move 'site_name' as Self.site_name?
     ) -> impl Future<Output = Result<LayerDetails, Error>> + Send;
 
     fn create_configuration_from_repos(
