@@ -12,145 +12,219 @@ pub trait CfsTrait {
 
     fn post_session(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        session: &CfsSessionPostRequest,
-    ) -> impl Future<Output = Result<CfsSessionGetResponse, Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _session: &CfsSessionPostRequest,
+    ) -> impl Future<Output = Result<CfsSessionGetResponse, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Post session command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
     fn get_sessions(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        session_name_opt: Option<&String>,
-        limit_opt: Option<u8>,
-        after_id_opt: Option<String>,
-        min_age_opt: Option<String>,
-        max_age_opt: Option<String>,
-        status_opt: Option<String>,
-        name_contains_opt: Option<String>,
-        is_succeded_opt: Option<bool>,
-        tags_opt: Option<String>,
-    ) -> impl Future<Output = Result<Vec<CfsSessionGetResponse>, Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _session_name_opt: Option<&String>,
+        _limit_opt: Option<u8>,
+        _after_id_opt: Option<String>,
+        _min_age_opt: Option<String>,
+        _max_age_opt: Option<String>,
+        _status_opt: Option<String>,
+        _name_contains_opt: Option<String>,
+        _is_succeded_opt: Option<bool>,
+        _tags_opt: Option<String>,
+    ) -> impl Future<Output = Result<Vec<CfsSessionGetResponse>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get sessions command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
     fn get_sessions_by_xname(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        xname_vec: &[&str],
-        limit_opt: Option<u8>,
-        after_id_opt: Option<String>,
-        min_age_opt: Option<String>,
-        max_age_opt: Option<String>,
-        status_opt: Option<String>,
-        name_contains_opt: Option<String>,
-        is_succeded_opt: Option<bool>,
-        tags_opt: Option<String>,
-    ) -> impl Future<Output = Result<Vec<CfsSessionGetResponse>, Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _xname_vec: &[&str],
+        _limit_opt: Option<u8>,
+        _after_id_opt: Option<String>,
+        _min_age_opt: Option<String>,
+        _max_age_opt: Option<String>,
+        _status_opt: Option<String>,
+        _name_contains_opt: Option<String>,
+        _is_succeded_opt: Option<bool>,
+        _tags_opt: Option<String>,
+    ) -> impl Future<Output = Result<Vec<CfsSessionGetResponse>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get sessions by xname command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
     fn get_and_filter_sessions(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        hsm_group_name_vec_opt: Option<Vec<String>>,
-        xname_vec_opt: Option<Vec<&str>>,
-        min_age_opt: Option<&String>,
-        max_age_opt: Option<&String>,
-        status_opt: Option<&String>,
-        cfs_session_name_opt: Option<&String>,
-        limit_number_opt: Option<&u8>,
-        is_succeded_opt: Option<bool>,
-    ) -> impl Future<Output = Result<Vec<CfsSessionGetResponse>, Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _hsm_group_name_vec_opt: Option<Vec<String>>,
+        _xname_vec_opt: Option<Vec<&str>>,
+        _min_age_opt: Option<&String>,
+        _max_age_opt: Option<&String>,
+        _status_opt: Option<&String>,
+        _cfs_session_name_opt: Option<&String>,
+        _limit_number_opt: Option<&u8>,
+        _is_succeded_opt: Option<bool>,
+    ) -> impl Future<Output = Result<Vec<CfsSessionGetResponse>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get and filter sessions command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
     fn get_session_logs_stream(
         &self,
-        shasta_token: &str,
-        site_name: &str,
-        cfs_session_name: &str,
-        k8s_api_url: &str,
-        k8s: &K8sDetails,
-    ) -> impl Future<Output = Result<Self::T, Error>> + Send;
+        _shasta_token: &str,
+        _site_name: &str,
+        _cfs_session_name: &str,
+        _k8s_api_url: &str,
+        _k8s: &K8sDetails,
+    ) -> impl Future<Output = Result<Self::T, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get session logs stream command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
     fn get_session_logs_stream_by_xname(
         &self,
-        auth_token: &str,
-        site_name: &str,
-        xname: &str,
-        k8s_api_url: &str,
-        k8s: &K8sDetails,
-    ) -> impl Future<Output = Result<Self::T, Error>> + Send;
+        _auth_token: &str,
+        _site_name: &str,
+        _xname: &str,
+        _k8s_api_url: &str,
+        _k8s: &K8sDetails,
+    ) -> impl Future<Output = Result<Self::T, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get session logs stream by xname command not implemented for this backend"
+                    .to_string(),
+            ))
+        }
+    }
 
     fn get_configuration(
         &self,
-        auth_token: &str,
-        base_url: &str,
-        root_cert: &[u8],
-        configuration_name_opt: Option<&String>,
-    ) -> impl Future<Output = Result<Vec<CfsConfigurationResponse>, Error>> + Send;
+        _auth_token: &str,
+        _base_url: &str,
+        _root_cert: &[u8],
+        _configuration_name_opt: Option<&String>,
+    ) -> impl Future<Output = Result<Vec<CfsConfigurationResponse>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get configuration command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
     fn get_and_filter_configuration(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        configuration_name: Option<&str>,
-        configuration_name_pattern: Option<&str>,
-        hsm_group_name_vec: &[String],
-        limit_number_opt: Option<&u8>,
-    ) -> impl Future<Output = Result<Vec<CfsConfigurationResponse>, Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _configuration_name: Option<&str>,
+        _configuration_name_pattern: Option<&str>,
+        _hsm_group_name_vec: &[String],
+        _limit_number_opt: Option<&u8>,
+    ) -> impl Future<Output = Result<Vec<CfsConfigurationResponse>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get and filter configuration command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
     fn get_configuration_layer_details(
         &self,
-        shasta_root_cert: &[u8],
-        gitea_base_url: &str,
-        gitea_token: &str,
-        layer: Layer,
-        site_name: &str, // FIXME: Should we move 'site_name' as Self.site_name?
-    ) -> impl Future<Output = Result<LayerDetails, Error>> + Send;
+        _shasta_root_cert: &[u8],
+        _gitea_base_url: &str,
+        _gitea_token: &str,
+        _layer: Layer,
+        _site_name: &str, // FIXME: Should we move 'site_name' as Self.site_name?
+    ) -> impl Future<Output = Result<LayerDetails, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get configuration layer details command not implemented for this backend"
+                    .to_string(),
+            ))
+        }
+    }
 
     fn create_configuration_from_repos(
         &self,
-        gitea_token: &str,
-        gitea_base_url: &str,
-        shasta_root_cert: &[u8],
-        // repos: Vec<PathBuf>,
-        repo_name_vec: Vec<String>,
-        local_git_commit_vec: Vec<String>,
-        playbook_file_name_opt: Option<&String>,
-    ) -> impl Future<Output = Result<CfsConfigurationRequest, Error>>;
+        _gitea_token: &str,
+        _gitea_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _repo_name_vec: Vec<String>,
+        _local_git_commit_vec: Vec<String>,
+        _playbook_file_name_opt: Option<&String>,
+    ) -> impl Future<Output = Result<CfsConfigurationRequest, Error>> {
+        async {
+            Err(Error::Message(
+                "Create configuration from repos command not implemented for this backend"
+                    .to_string(),
+            ))
+        }
+    }
 
     // This function enforces a new CFS configuration to be created. First, checks if CFS configuration
     // with same name already exists in CSM, if that is the case, it will return an error, otherwise
     // creates a new CFS configuration
     fn put_configuration(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        configuration: &CfsConfigurationRequest,
-        configuration_name: &str,
-    ) -> impl Future<Output = Result<CfsConfigurationResponse, Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _configuration: &CfsConfigurationRequest,
+        _configuration_name: &str,
+    ) -> impl Future<Output = Result<CfsConfigurationResponse, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Put configuration command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
     fn update_runtime_configuration(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        xnames: Vec<String>,
-        desired_configuration: &str,
-        enabled: bool,
-    ) -> impl Future<Output = Result<(), Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _xnames: Vec<String>,
+        _desired_configuration: &str,
+        _enabled: bool,
+    ) -> impl Future<Output = Result<(), Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Update runtime configuration command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
     // Get all CFS sessions, IMS images and BOS sessiontemplates related to a CFS configuration
     fn get_derivatives(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        configuration_name: &str,
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _configuration_name: &str,
     ) -> impl Future<
         Output = Result<
             (
@@ -160,5 +234,11 @@ pub trait CfsTrait {
             ),
             Error,
         >,
-    > + Send;
+    > + Send {
+        async {
+            Err(Error::Message(
+                "Get derivatives command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 }

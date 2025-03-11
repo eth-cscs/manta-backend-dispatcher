@@ -5,21 +5,25 @@ use crate::error::Error;
 pub trait ApplySessionTrait {
     fn apply_session(
         &self,
-        gitea_token: &str,
-        gitea_base_url: &str,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        k8s_api_url: &str,
-        cfs_conf_sess_name: Option<&String>,
-        playbook_yaml_file_name_opt: Option<&String>,
-        hsm_group: Option<&String>,
-        repos_paths: Vec<PathBuf>,
-        ansible_limit: Option<String>,
-        ansible_verbosity: Option<String>,
-        ansible_passthrough: Option<String>,
-        watch_logs: bool,
-        /* kafka_audit: &Kafka,
-        k8s: &K8sDetails, */
-    ) -> impl Future<Output = Result<(String, String), Error>> + Send;
+        _gitea_token: &str,
+        _gitea_base_url: &str,
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _k8s_api_url: &str,
+        _cfs_conf_sess_name: Option<&String>,
+        _playbook_yaml_file_name_opt: Option<&String>,
+        _hsm_group: Option<&String>,
+        _repos_paths: Vec<PathBuf>,
+        _ansible_limit: Option<String>,
+        _ansible_verbosity: Option<String>,
+        _ansible_passthrough: Option<String>,
+        _watch_logs: bool,
+    ) -> impl Future<Output = Result<(String, String), Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Apply session command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 }
