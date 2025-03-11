@@ -1239,7 +1239,15 @@ impl BootParameters {
             .collect();
 
         for (key, _value) in kernel_params_to_delete_tuple {
+            log::debug!("key '{}' to be removed", key);
+
             changed = changed | params.remove(key).is_some();
+
+            if changed {
+                log::debug!("key '{}' removed", key);
+            } else {
+                log::debug!("key '{}' not found", key);
+            }
         }
 
         self.params = params
