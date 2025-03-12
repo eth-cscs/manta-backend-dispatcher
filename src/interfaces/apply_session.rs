@@ -10,7 +10,7 @@ pub trait ApplySessionTrait {
         _shasta_token: &str,
         _shasta_base_url: &str,
         _shasta_root_cert: &[u8],
-        // _k8s_api_url: &str,
+        _k8s_api_url: &str,
         _cfs_conf_sess_name: Option<&String>,
         _playbook_yaml_file_name_opt: Option<&String>,
         _hsm_group: Option<&String>,
