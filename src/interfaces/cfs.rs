@@ -96,7 +96,7 @@ pub trait CfsTrait {
         _cfs_session_name: &str,
         _k8s_api_url: &str,
         _k8s: &K8sDetails,
-    ) -> impl Future<Output = Result<Self::T, Error>> + Send {
+    ) -> impl Future<Output = Result<Self::T, Error>> + Send + Sized {
         async {
             Err(Error::Message(
                 "Get session logs stream command not implemented for this backend".to_string(),
@@ -111,7 +111,7 @@ pub trait CfsTrait {
         _xname: &str,
         _k8s_api_url: &str,
         _k8s: &K8sDetails,
-    ) -> impl Future<Output = Result<Self::T, Error>> + Send {
+    ) -> impl Future<Output = Result<Self::T, Error>> + Send + Sized {
         async {
             Err(Error::Message(
                 "Get session logs stream by xname command not implemented for this backend"

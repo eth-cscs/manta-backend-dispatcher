@@ -13,14 +13,14 @@ use crate::error::Error;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum K8sAuth {
+    #[serde(rename = "native")]
     Native {
         certificate_authority_data: String,
         client_certificate_data: String,
         client_key_data: String,
     },
-    Vault {
-        base_url: String,
-    },
+    #[serde(rename = "vault")]
+    Vault { base_url: String },
 }
 
 #[derive(Serialize, Deserialize, Debug)]
