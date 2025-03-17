@@ -5,10 +5,38 @@ use crate::types::cfs::{CfsConfigurationResponse, CfsSessionPostRequest, Layer, 
 use crate::types::ims::Image;
 use crate::types::{BosSessionTemplate, K8sDetails};
 use crate::{error::Error, types::cfs::CfsSessionGetResponse};
-use futures::AsyncBufRead;
 
 pub trait CfsTrait {
-    type T: AsyncBufRead;
+    type T: futures::AsyncBufRead + Sized;
+
+    fn get_session_logs_stream(
+        &self,
+        _shasta_token: &str,
+        _site_name: &str,
+        _cfs_session_name: &str,
+        _k8s: &K8sDetails,
+    ) -> impl Future<Output = Result<Self::T, Error>> + Send + Sized {
+        async {
+            Err::<Self::T, Error>(Error::Message(
+                "Get session logs stream command not implemented for this backend".to_string(),
+            ))
+        }
+    }
+
+    fn get_session_logs_stream_by_xname(
+        &self,
+        _auth_token: &str,
+        _site_name: &str,
+        _xname: &str,
+        _k8s: &K8sDetails,
+    ) -> impl Future<Output = Result<Self::T, Error>> + Send + Sized {
+        async {
+            Err(Error::Message(
+                "Get session logs stream by xname command not implemented for this backend"
+                    .to_string(),
+            ))
+        }
+    }
 
     fn post_session(
         &self,
@@ -85,37 +113,6 @@ pub trait CfsTrait {
         async {
             Err(Error::Message(
                 "Get and filter sessions command not implemented for this backend".to_string(),
-            ))
-        }
-    }
-
-    fn get_session_logs_stream(
-        &self,
-        _shasta_token: &str,
-        _site_name: &str,
-        _cfs_session_name: &str,
-        _k8s_api_url: &str,
-        _k8s: &K8sDetails,
-    ) -> impl Future<Output = Result<Self::T, Error>> + Send + Sized {
-        async {
-            Err(Error::Message(
-                "Get session logs stream command not implemented for this backend".to_string(),
-            ))
-        }
-    }
-
-    fn get_session_logs_stream_by_xname(
-        &self,
-        _auth_token: &str,
-        _site_name: &str,
-        _xname: &str,
-        _k8s_api_url: &str,
-        _k8s: &K8sDetails,
-    ) -> impl Future<Output = Result<Self::T, Error>> + Send + Sized {
-        async {
-            Err(Error::Message(
-                "Get session logs stream by xname command not implemented for this backend"
-                    .to_string(),
             ))
         }
     }
