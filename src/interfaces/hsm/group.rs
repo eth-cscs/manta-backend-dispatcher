@@ -33,6 +33,12 @@ pub trait GroupTrait {
         _hsm_name_vec: Vec<&str>,
     ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>> + Send;
 
+    fn get_group_map_and_filter_by_member_vec(
+        &self,
+        _auth_token: &str,
+        _member_vec: &[&str],
+    ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>> + Send;
+
     fn get_all_groups(
         &self,
         _auth_token: &str,
