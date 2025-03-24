@@ -11,7 +11,7 @@ use strum_macros::{AsRefStr, Display, EnumIter, EnumString, IntoStaticStr};
 
 use crate::error::Error;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum K8sAuth {
     #[serde(rename = "native")]
     Native {
@@ -23,7 +23,7 @@ pub enum K8sAuth {
     Vault { base_url: String },
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct K8sDetails {
     pub api_url: String,
     pub authentication: K8sAuth,

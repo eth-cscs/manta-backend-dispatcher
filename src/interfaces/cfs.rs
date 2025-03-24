@@ -7,7 +7,7 @@ use crate::types::{BosSessionTemplate, K8sDetails};
 use crate::{error::Error, types::cfs::CfsSessionGetResponse};
 
 pub trait CfsTrait {
-    type T: futures::AsyncBufRead + Sized;
+    type T: futures::AsyncBufRead + Send + Sized;
 
     fn get_session_logs_stream(
         &self,
@@ -15,7 +15,7 @@ pub trait CfsTrait {
         _site_name: &str,
         _cfs_session_name: &str,
         _k8s: &K8sDetails,
-    ) -> impl Future<Output = Result<Self::T, Error>> + Send + Sized {
+    ) -> impl Future<Output = Result<Self::T, Error>> {
         async {
             Err::<Self::T, Error>(Error::Message(
                 "Get session logs stream command not implemented for this backend".to_string(),
@@ -29,7 +29,7 @@ pub trait CfsTrait {
         _site_name: &str,
         _xname: &str,
         _k8s: &K8sDetails,
-    ) -> impl Future<Output = Result<Self::T, Error>> + Send + Sized {
+    ) -> impl Future<Output = Result<Self::T, Error>> {
         async {
             Err(Error::Message(
                 "Get session logs stream by xname command not implemented for this backend"
