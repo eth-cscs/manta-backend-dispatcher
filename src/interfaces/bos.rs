@@ -6,37 +6,61 @@ use crate::{
 };
 
 pub trait ClusterTemplateTrait {
-    fn get(
+    fn get_template(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        bos_session_template_id_opt: Option<&str>,
-    ) -> impl std::future::Future<Output = Result<Vec<BosSessionTemplate>, Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _bos_session_template_id_opt: Option<&str>,
+    ) -> impl std::future::Future<Output = Result<Vec<BosSessionTemplate>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get template command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
-    fn get_all(
+    fn get_all_templates(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-    ) -> impl std::future::Future<Output = Result<Vec<BosSessionTemplate>, Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+    ) -> impl std::future::Future<Output = Result<Vec<BosSessionTemplate>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get all templates command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
-    fn put(
+    fn put_template(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        bos_template: &BosSessionTemplate,
-        bos_template_name: &str,
-    ) -> impl std::future::Future<Output = Result<BosSessionTemplate, Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _bos_template: &BosSessionTemplate,
+        _bos_template_name: &str,
+    ) -> impl std::future::Future<Output = Result<BosSessionTemplate, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Put template command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 
-    fn delete(
+    fn delete_template(
         &self,
-        shasta_token: &str,
-        shasta_base_url: &str,
-        shasta_root_cert: &[u8],
-        bos_template_id: &str,
-    ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _bos_template_id: &str,
+    ) -> impl std::future::Future<Output = Result<(), Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Delete template command not implemented for this backend".to_string(),
+            ))
+        }
+    }
 }
 
 pub trait ClusterSessionTrait {
