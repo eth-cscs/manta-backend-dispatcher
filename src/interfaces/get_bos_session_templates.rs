@@ -1,6 +1,6 @@
 use std::future::Future;
 
-use crate::{error::Error, types::BosSessionTemplate};
+use crate::{error::Error, types::bos::session_template::BosSessionTemplate};
 
 pub trait GetTemplatesTrait {
     fn get_templates(

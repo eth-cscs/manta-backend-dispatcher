@@ -3,7 +3,7 @@ use std::future::Future;
 use crate::types::cfs::cfs_configuration_request::CfsConfigurationRequest;
 use crate::types::cfs::{CfsConfigurationResponse, CfsSessionPostRequest, Layer, LayerDetails};
 use crate::types::ims::Image;
-use crate::types::{BosSessionTemplate, K8sDetails};
+use crate::types::{bos::session_template::BosSessionTemplate, K8sDetails};
 use crate::{error::Error, types::cfs::CfsSessionGetResponse};
 
 pub trait CfsTrait {
