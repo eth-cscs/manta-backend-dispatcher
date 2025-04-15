@@ -1,10 +1,10 @@
 use std::future::Future;
 
+use crate::types::cfs::cfs_configuration_details::LayerDetails;
 use crate::types::cfs::cfs_configuration_request::CfsConfigurationRequest;
+use crate::types::cfs::cfs_configuration_response::{CfsConfigurationResponse, Layer};
 use crate::types::cfs::component::Component;
-use crate::types::cfs::session::{
-    CfsConfigurationResponse, CfsSessionPostRequest, Layer, LayerDetails,
-};
+use crate::types::cfs::session::CfsSessionPostRequest;
 use crate::types::ims::Image;
 use crate::types::{bos::session_template::BosSessionTemplate, K8sDetails};
 use crate::{error::Error, types::cfs::session::CfsSessionGetResponse};
