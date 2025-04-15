@@ -127,7 +127,7 @@ pub trait CfsTrait {
         _shasta_root_cert: &[u8],
         _hsm_group_available_vec: Vec<String>,
         _cfs_session_name: &str,
-        _dry_run: &bool,
+        _dry_run: bool,
         _assume_yes: bool,
     ) -> impl Future<Output = Result<(), Error>> + Send {
         async {
