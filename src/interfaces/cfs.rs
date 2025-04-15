@@ -259,17 +259,18 @@ pub trait CfsTrait {
         }
     }
 
-    fn get_cfs_component(
+    fn get_cfs_components(
         &self,
         _shasta_token: &str,
         _shasta_base_url: &str,
         _shasta_root_cert: &[u8],
+        _configuration_name: &str,
         _components_ids: Option<&str>,
         _status: Option<&str>,
     ) -> impl Future<Output = Result<Vec<Component>, Error>> + Send {
         async {
             Err(Error::Message(
-                "Get derivatives command not implemented for this backend".to_string(),
+                "Get CFS conponents command not implemented for this backend".to_string(),
             ))
         }
     }
