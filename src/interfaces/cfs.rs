@@ -264,7 +264,7 @@ pub trait CfsTrait {
         _shasta_token: &str,
         _shasta_base_url: &str,
         _shasta_root_cert: &[u8],
-        _configuration_name: &str,
+        _configuration_name: Option<&str>,
         _components_ids: Option<&str>,
         _status: Option<&str>,
     ) -> impl Future<Output = Result<Vec<Component>, Error>> + Send {
