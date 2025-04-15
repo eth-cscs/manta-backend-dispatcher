@@ -1,6 +1,7 @@
 use std::future::Future;
 
 use crate::types::cfs::cfs_configuration_request::CfsConfigurationRequest;
+use crate::types::cfs::component::Component;
 use crate::types::cfs::{CfsConfigurationResponse, CfsSessionPostRequest, Layer, LayerDetails};
 use crate::types::ims::Image;
 use crate::types::{bos::session_template::BosSessionTemplate, K8sDetails};
@@ -113,6 +114,21 @@ pub trait CfsTrait {
         async {
             Err(Error::Message(
                 "Get and filter sessions command not implemented for this backend".to_string(),
+            ))
+        }
+    }
+
+    fn delete_and_cancel_session(
+        &self,
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _hsm_group_available_vec: Vec<String>,
+        _cfs_session_name: &str,
+    ) -> impl Future<Output = Result<(), Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Delete and cancel session command not implemented for this backend".to_string(),
             ))
         }
     }
@@ -232,6 +248,21 @@ pub trait CfsTrait {
             Error,
         >,
     > + Send {
+        async {
+            Err(Error::Message(
+                "Get derivatives command not implemented for this backend".to_string(),
+            ))
+        }
+    }
+
+    fn get_cfs_component(
+        &self,
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _components_ids: Option<&str>,
+        _status: Option<&str>,
+    ) -> impl Future<Output = Result<Vec<Component>, Error>> + Send {
         async {
             Err(Error::Message(
                 "Get derivatives command not implemented for this backend".to_string(),

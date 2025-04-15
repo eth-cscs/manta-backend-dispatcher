@@ -1,4 +1,5 @@
 pub mod cfs_configuration_request;
+pub mod component;
 
 use std::{collections::HashMap, fmt};
 
