@@ -2,10 +2,12 @@ use std::future::Future;
 
 use crate::types::cfs::cfs_configuration_request::CfsConfigurationRequest;
 use crate::types::cfs::component::Component;
-use crate::types::cfs::{CfsConfigurationResponse, CfsSessionPostRequest, Layer, LayerDetails};
+use crate::types::cfs::session::{
+    CfsConfigurationResponse, CfsSessionPostRequest, Layer, LayerDetails,
+};
 use crate::types::ims::Image;
 use crate::types::{bos::session_template::BosSessionTemplate, K8sDetails};
-use crate::{error::Error, types::cfs::CfsSessionGetResponse};
+use crate::{error::Error, types::cfs::session::CfsSessionGetResponse};
 
 pub trait CfsTrait {
     type T: futures::AsyncBufRead + Send + Sized;
