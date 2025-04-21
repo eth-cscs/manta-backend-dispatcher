@@ -3,7 +3,7 @@ use std::{future::Future, path::PathBuf};
 use crate::error::Error;
 
 pub trait ApplySessionTrait {
-    fn apply_session(
+    fn i_apply_session(
         &self,
         _gitea_token: &str,
         _gitea_base_url: &str,
