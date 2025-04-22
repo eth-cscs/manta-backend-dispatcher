@@ -17,6 +17,33 @@ pub trait ImsTrait {
         }
     }
 
+    fn get_all_images(
+        &self,
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+    ) -> impl Future<Output = Result<Vec<Image>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Get images command not implemented for this backend".to_string(),
+            ))
+        }
+    }
+
+    fn filter_images(
+        &self,
+        _shasta_token: &str,
+        _shasta_base_url: &str,
+        _shasta_root_cert: &[u8],
+        _configuration_name: Option<&str>,
+    ) -> impl Future<Output = Result<Vec<Image>, Error>> + Send {
+        async {
+            Err(Error::Message(
+                "Filter images command not implemented for this backend".to_string(),
+            ))
+        }
+    }
+
     fn delete_image(
         &self,
         _shasta_token: &str,
