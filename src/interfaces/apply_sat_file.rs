@@ -21,8 +21,6 @@ pub trait SatTrait {
         _gitea_token: &str,
         _do_not_reboot: bool,
         _watch_logs: bool,
-        _image_only: bool,
-        _session_template_only: bool,
         _debug_on_failure: bool,
         _dry_run: bool,
     ) -> impl Future<Output = Result<(), Error>> + Send {
