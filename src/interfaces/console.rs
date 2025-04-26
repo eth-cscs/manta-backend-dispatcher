@@ -14,6 +14,8 @@ pub trait ConsoleTrait {
         _shasta_token: &str,
         _site_name: &str,
         _xname: &str,
+        _term_width: u16,
+        _term_height: u16,
         _k8s: &K8sDetails,
     ) -> impl Future<Output = Result<(Self::T, Self::U), Error>> + Send {
         async {
