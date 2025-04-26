@@ -10,7 +10,7 @@ use crate::types::{bos::session_template::BosSessionTemplate, K8sDetails};
 use crate::{error::Error, types::cfs::session::CfsSessionGetResponse};
 
 pub trait CfsTrait {
-    type T: futures::AsyncBufRead + Send + Sized;
+    type T: futures_io::AsyncBufRead + Send + Sized;
 
     fn get_session_logs_stream(
         &self,
