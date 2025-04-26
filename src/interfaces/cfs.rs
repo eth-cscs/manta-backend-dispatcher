@@ -20,7 +20,7 @@ pub trait CfsTrait {
         _k8s: &K8sDetails,
     ) -> impl Future<Output = Result<Self::T, Error>> {
         async {
-            Err::<Self::T, Error>(Error::Message(
+            Err(Error::Message(
                 "Get session logs stream command not implemented for this backend".to_string(),
             ))
         }

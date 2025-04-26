@@ -5,6 +5,7 @@ pub mod bos;
 pub mod bss;
 pub mod cfs;
 pub mod commands;
+pub mod console;
 pub mod get_images_and_details;
 pub mod hsm;
 pub mod ims;
