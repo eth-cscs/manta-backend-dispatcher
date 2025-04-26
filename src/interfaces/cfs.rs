@@ -41,6 +41,14 @@ pub trait CfsTrait {
         }
     }
 
+    fn get_cfs_health(&self) -> impl Future<Output = Result<(), Error>> {
+        async {
+            Err(Error::Message(
+                "Get CFS health command not implemented for this backend".to_string(),
+            ))
+        }
+    }
+
     fn post_session(
         &self,
         _shasta_token: &str,
