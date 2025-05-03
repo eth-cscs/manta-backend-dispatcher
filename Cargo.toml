@@ -1,5 +1,5 @@
 [package]
-name = "backend-dispatcher"
+name = "manta-backend-dispatcher"
 version = "0.1.65"
 edition = "2021"
 license-file = "LICENSE"
@@ -23,3 +23,8 @@ tokio = { version = "1.14", features = ["full"] }
 serde_yaml = "0.9.17"
 rdkafka = { version = "0.37", features = ["cmake-build"] }
 chrono = { version = "0.4.31", default-features = false }
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
