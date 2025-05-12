@@ -8,6 +8,11 @@ use crate::{
 };
 
 pub trait RedfishEndpointTrait {
+  fn get_all_redfish_endpoints(
+    &self,
+    auth_token: &str,
+  ) -> impl Future<Output = Result<RedfishEndpointArray, Error>> + Send;
+
   fn get_redfish_endpoints(
     &self,
     auth_token: &str,
