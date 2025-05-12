@@ -9,23 +9,25 @@ homepage = "https://github.com/eth-cscs/manta-backend-dispatcher/blob/main/READM
 repository = "https://github.com/eth-cscs/manta-backend-dispatcher"
 
 [dependencies]
-reqwest = { version = "0.12.15", default-features = false, features = ["blocking", "json", "rustls-tls", "socks"] }
-serde = { version = "1.0.219", features = ["derive"] }
-serde_json = "1.0.140"
-thiserror = "2.0.12"
-log = "0.4.27"
-uuid = "1.16.0"
-strum = { version = "0.27.1", default-features = false }
-strum_macros = "0.27.1"
-# kube = { version = "0.87.2", features = ["ws"] }
-# k8s-openapi = { version = "0.20.0", features = ["v1_26"] }
-# futures = { version = "0.3.28", default-features = false }
-futures-io = "0.3.31"
+chrono = { workspace = true, default-features = false }
+#futures-io = "0.3.31"
+futures-io = { workspace = true }
 # futures-util = "0.3.28"
-tokio = { version = "1.45", features = ["full"] }
-serde_yaml = "0.9.34"
-rdkafka = { version = "0.37", features = ["cmake-build"] }
-chrono = { version = "0.4.41", default-features = false }
+# futures = { version = "0.3.28", default-features = false }
+# k8s-openapi = { version = "0.20.0", features = ["v1_26"] }
+# kube = { version = "0.87.2", features = ["ws"] }
+#log = "0.4.27"
+log = { workspace = true } 
+rdkafka = { workspace = true }
+reqwest = { workspace = true , default-features = false, features = ["blocking", "json", "rustls-tls", "socks"] }
+serde_json = { workspace = true }
+serde = { workspace = true , features = ["derive"] }
+serde_yaml = { workspace = true } # TODO: deprecated, need to replace, potential candidate: yaml-rust2
+strum_macros = { workspace = true }
+strum = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true, features = ["full"] }
+uuid = { workspace = true }
 
 # The profile that 'dist' will build with
 [profile.dist]
