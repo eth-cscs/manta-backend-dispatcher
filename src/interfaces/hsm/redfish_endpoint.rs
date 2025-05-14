@@ -28,7 +28,7 @@ pub trait RedfishEndpointTrait {
   fn add_redfish_endpoint(
     &self,
     auth_token: &str,
-    redfish_endpoint: &RedfishEndpoint,
+    redfish_endpoint: &RedfishEndpointArray,
   ) -> impl Future<Output = Result<(), Error>> + Send;
 
   fn update_redfish_endpoint(
