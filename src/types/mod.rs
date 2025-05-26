@@ -2,6 +2,7 @@ pub mod bos;
 pub mod cfs;
 pub mod hsm;
 pub mod ims;
+pub mod pcs;
 pub mod kafka;
 
 use std::{collections::HashMap, str::FromStr};
