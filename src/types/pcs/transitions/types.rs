@@ -1,7 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-use crate::error::Error;
-
 #[derive(Debug, Serialize, Deserialize, Default)]
 pub struct Location {
   pub xname: String,
@@ -28,41 +26,6 @@ pub enum Operation {
   ForceOff,
 }
 
-impl Operation {
-  /* pub fn to_string(&self) -> String {
-      match self {
-          Operation::On => "on".to_string(),
-          Operation::Off => "off".to_string(),
-          Operation::SoftOff => "soft-off".to_string(),
-          Operation::SoftRestart => "soft-restart".to_string(),
-          Operation::HardRestart => "hard-restart".to_string(),
-          Operation::Init => "init".to_string(),
-          Operation::ForceOff => "force-off".to_string(),
-      }
-  } */
-
-  pub fn from_str(operation: &str) -> Result<Operation, Error> {
-    match operation {
-      "on" => Ok(Operation::On),
-      "off" => Ok(Operation::Off),
-      "soft-off" => Ok(Operation::SoftOff),
-      "soft-restart" => Ok(Operation::SoftRestart),
-      "hard-restart" => Ok(Operation::HardRestart),
-      "init" => Ok(Operation::Init),
-      "force-off" => Ok(Operation::ForceOff),
-      _ => Err(Error::Message("Operation not valid".to_string())),
-    }
-  }
-}
-
-/* impl FromStr for Operation {
-    type Err = Error;
-
-    fn from_str(operation: &str) -> Result<Operation, Error> {
-        Self::from_str(operation)
-    }
-} */
-
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Transition {
   pub operation: Operation,
@@ -71,5 +34,3 @@ pub struct Transition {
   pub task_deadline_minutes: Option<usize>,
   pub location: Vec<Location>,
 }
-
-
