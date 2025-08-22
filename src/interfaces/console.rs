@@ -9,7 +9,7 @@ pub trait ConsoleTrait {
   type T: AsyncWrite + Unpin;
   type U: AsyncRead + Unpin;
 
-  fn attach_to_console(
+  fn attach_to_node_console(
     &self,
     _shasta_token: &str,
     _site_name: &str,
@@ -20,7 +20,24 @@ pub trait ConsoleTrait {
   ) -> impl Future<Output = Result<(Self::T, Self::U), Error>> + Send {
     async {
       Err(Error::Message(
-        "Attach to console command not implemented for this backend"
+        "Attach to node console command not implemented for this backend"
+          .to_string(),
+      ))
+    }
+  }
+
+  fn attach_to_session_console(
+    &self,
+    _shasta_token: &str,
+    _site_name: &str,
+    _session_name: &str,
+    _term_width: u16,
+    _term_height: u16,
+    _k8s: &K8sDetails,
+  ) -> impl Future<Output = Result<(Self::T, Self::U), Error>> + Send {
+    async {
+      Err(Error::Message(
+        "Attach to session console command not implemented for this backend"
           .to_string(),
       ))
     }

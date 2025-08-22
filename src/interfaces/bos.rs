@@ -1,7 +1,5 @@
 use std::future::Future;
 
-use serde_json::Value;
-
 use crate::{
   error::Error,
   types::bos::{session::BosSession, session_template::BosSessionTemplate},
