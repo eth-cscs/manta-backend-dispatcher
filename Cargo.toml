@@ -1,6 +1,6 @@
 [package]
 name = "manta-backend-dispatcher"
-version = "0.5.0"
+version = "0.6.0"
 edition = "2021"
 license-file = "LICENSE"
 description = "Traits to be developed by Mesa backends"
