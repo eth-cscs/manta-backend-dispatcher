@@ -13,6 +13,10 @@ pub trait MigrateRestoreTrait {
     _hsm_file: Option<&String>,
     _ims_file: Option<&String>,
     _image_dir: Option<&String>,
+    _overwrite_group: bool,
+    _overwrite_configuration: bool,
+    _overwrite_image: bool,
+    _overwrite_template: bool,
   ) -> impl Future<Output = Result<(), Error>> + Send {
     async {
       Err(Error::Message(
