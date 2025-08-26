@@ -30,7 +30,7 @@ pub trait GroupTrait {
   fn get_group_map_and_filter_by_group_vec(
     &self,
     _auth_token: &str,
-    _hsm_name_vec: Vec<&str>,
+    _hsm_name_vec: &[&str],
   ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>>
        + Send;
 
@@ -67,7 +67,7 @@ pub trait GroupTrait {
   fn get_hsm_map_and_filter_by_hsm_name_vec(
     &self,
     auth_token: &str,
-    hsm_name_vec: Vec<&str>,
+    hsm_name_vec: &[&str],
   ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>>
        + Send;
 
@@ -82,7 +82,7 @@ pub trait GroupTrait {
     &self,
     auth_token: &str,
     group_label: &str,
-    members: Vec<&str>,
+    members: &[&str],
   ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send;
 
   fn delete_member_from_group(
@@ -96,8 +96,8 @@ pub trait GroupTrait {
     &self,
     auth_token: &str,
     group_name: &str,
-    members_to_remove: &Vec<String>,
-    members_to_add: &Vec<String>,
+    members_to_remove: &[&str],
+    members_to_add: &[&str],
   ) -> impl std::future::Future<Output = Result<(), Error>> + Send;
 
   fn migrate_group_members(
@@ -105,7 +105,7 @@ pub trait GroupTrait {
     shasta_token: &str,
     target_hsm_group_name: &str,
     parent_hsm_group_name: &str,
-    new_target_hsm_members: Vec<&str>,
+    new_target_hsm_members: &[&str],
   ) -> impl std::future::Future<Output = Result<(Vec<String>, Vec<String>), Error>>
        + Send;
 }
