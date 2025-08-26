@@ -92,7 +92,7 @@ pub trait CfsTrait {
     }
   }
 
-  fn get_sessions_by_xname(
+  /* fn get_sessions_by_xname(
     &self,
     _shasta_token: &str,
     _shasta_base_url: &str,
@@ -114,15 +114,15 @@ pub trait CfsTrait {
           .to_string(),
       ))
     }
-  }
+  } */
 
   fn get_and_filter_sessions(
     &self,
     _shasta_token: &str,
     _shasta_base_url: &str,
     _shasta_root_cert: &[u8],
-    _hsm_group_name_vec_opt: Option<Vec<String>>,
-    _xname_vec_opt: Option<Vec<&str>>,
+    _hsm_group_name_vec: Vec<String>,
+    _xname_vec: Vec<&str>,
     _min_age_opt: Option<&String>,
     _max_age_opt: Option<&String>,
     _status_opt: Option<&String>,
