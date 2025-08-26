@@ -162,7 +162,7 @@ pub trait CfsTrait {
     _shasta_root_cert: &[u8],
     _configuration_name: Option<&str>,
     _configuration_name_pattern: Option<&str>,
-    _hsm_group_name_vec: &[String],
+    _hsm_group_name_vec: &[&str],
     _since_opt: Option<NaiveDateTime>,
     _until_opt: Option<NaiveDateTime>,
     _limit_number_opt: Option<&u8>,
@@ -197,9 +197,9 @@ pub trait CfsTrait {
     _gitea_token: &str,
     _gitea_base_url: &str,
     _shasta_root_cert: &[u8],
-    _repo_name_vec: Vec<String>,
-    _local_git_commit_vec: Vec<String>,
-    _playbook_file_name_opt: Option<&String>,
+    _repo_name_vec: &[&str],
+    _local_git_commit_vec: &[&str],
+    _playbook_file_name_opt: Option<&str>,
   ) -> impl Future<Output = Result<CfsConfigurationRequest, Error>> {
     async {
       Err(Error::Message(

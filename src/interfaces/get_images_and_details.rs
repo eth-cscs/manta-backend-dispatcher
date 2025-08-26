@@ -18,8 +18,8 @@ pub trait GetImagesAndDetailsTrait {
     _shasta_token: &str,
     _shasta_base_url: &str,
     _shasta_root_cert: &[u8],
-    _hsm_group_name_vec: &[String],
-    _id_opt: Option<&String>,
+    _hsm_group_name_vec: &[&str],
+    _id_opt: Option<&str>,
     _limit_number: Option<&u8>,
   ) -> impl Future<Output = Result<Vec<(Image, String, String, bool)>, Error>> + Send
   {
