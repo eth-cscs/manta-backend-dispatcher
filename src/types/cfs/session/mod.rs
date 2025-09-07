@@ -119,6 +119,25 @@ impl CfsSessionGetResponse {
     })
   }
 
+  /// Get completion time
+  pub fn get_completion_time(&self) -> Option<String> {
+    self.status.as_ref().and_then(|status| {
+      status
+        .session
+        .as_ref()
+        .and_then(|session| session.completion_time.clone())
+    })
+  }
+
+  pub fn status(&self) -> Option<String> {
+    self.status.as_ref().and_then(|status| {
+      status
+        .session
+        .as_ref()
+        .and_then(|session| session.status.clone())
+    })
+  }
+
   /// Returns list of result_ids
   pub fn get_result_id_vec(&self) -> Vec<String> {
     if let Some(status) = &self.status {
