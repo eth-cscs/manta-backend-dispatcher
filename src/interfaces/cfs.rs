@@ -22,6 +22,7 @@ pub trait CfsTrait {
     _shasta_token: &str,
     _site_name: &str,
     _cfs_session_name: &str,
+    _timestamps: bool,
     _k8s: &K8sDetails,
   ) -> impl Future<Output = Result<Self::T, Error>> {
     async {
@@ -37,6 +38,7 @@ pub trait CfsTrait {
     _auth_token: &str,
     _site_name: &str,
     _xname: &str,
+    _timestamps: bool,
     _k8s: &K8sDetails,
   ) -> impl Future<Output = Result<Self::T, Error>> {
     async {

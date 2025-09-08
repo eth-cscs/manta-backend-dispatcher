@@ -20,6 +20,7 @@ pub trait SatTrait {
     _gitea_token: &str,
     _do_not_reboot: bool,
     _watch_logs: bool,
+    _timestamps: bool,
     _debug_on_failure: bool,
     _overwrite: bool,
     _dry_run: bool,
