@@ -24,4 +24,6 @@ pub enum Error {
   ConfigurationAlreadyExistsError(String),
   #[error("ERROR - CFS Configuration not found: {0}")]
   ConfigurationNotFound(String),
+  #[error("Authentication token not found in {0}")]
+  AuthenticationTokenNotFound(String),
 }
