@@ -1,4 +1,5 @@
-use crate::error::Error;
+use super::ims::Image;
+use crate::{error::Error, types::ims::PatchMetadata};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
@@ -25,6 +26,15 @@ pub struct BootParameters {
 }
 
 impl BootParameters {
+  pub fn is_root_kernel_param_iscsi_ready(&self) -> bool {
+    self
+      .get_kernel_params()
+      .get("root")
+      .is_some_and(|root_param_value| {
+        root_param_value.contains("sbps") && root_param_value.contains("iscsi")
+      })
+  }
+
   // Assumes s3 path looks like:
   // - s3://boot-images/59e0180a-3fdd-4936-bba7-14ba914ffd34/kernel
   // - craycps-s3:s3://boot-images/59e0180a-3fdd-4936-bba7-14ba914ffd34/rootfs:3dfae8d1fa3bb2bfb18152b4f9940ad0-667:dvs:api-gw-service-nmn.local:300:nmn0,hsn0:0
@@ -33,10 +43,8 @@ impl BootParameters {
     s3_path.split("/").skip(3).next()
   }
 
-  /// Returns the image id. This function may fail since it assumes kernel path has the following
-  // FIXME: Change function signature so it returns a Result<String, Error> instead of String
-  pub fn get_boot_image_id(&self) -> String {
-    let params: HashMap<&str, &str> = self
+  pub fn get_kernel_params(&self) -> HashMap<&str, &str> {
+    self
       .params
       .split_whitespace()
       .map(|kernel_param| {
@@ -45,7 +53,13 @@ impl BootParameters {
           .map(|(key, value)| (key.trim(), value.trim()))
           .unwrap_or((kernel_param, ""))
       })
-      .collect();
+      .collect()
+  }
+
+  /// Returns the image id. This function may fail since it assumes kernel path has the following
+  // FIXME: Change function signature so it returns a Result<String, Error> instead of String
+  pub fn get_boot_image_id(&self) -> String {
+    let params: HashMap<&str, &str> = self.get_kernel_params();
 
     // NOTE: CN nodes have UIID image id in 'root' kernel parameter
     // Get `root` kernel parameter and split it by '/'
@@ -110,13 +124,7 @@ impl BootParameters {
     // replace image id in 'root' kernel param
 
     // convert kernel params to a hashmap
-    let mut params: HashMap<&str, &str> = self
-      .params
-      .split_whitespace()
-      .map(|kernel_param| {
-        kernel_param.split_once('=').unwrap_or((kernel_param, ""))
-      })
-      .collect();
+    let mut params: HashMap<&str, &str> = self.get_kernel_params();
 
     // NOTE: CN nodes have UIID image id in 'root' kernel parameter
     // Get `root` kernel parameter and split it by '/'
@@ -139,7 +147,7 @@ impl BootParameters {
           changed = true;
         }
         // Replace image id in `root` kernel parameter with new value
-        *current_image_id = new_image_id;
+        *current_image_id = &new_image_id;
       }
     }
 
@@ -181,7 +189,7 @@ impl BootParameters {
 
       for substring in &mut metal_server_kernel_param {
         if uuid::Uuid::try_parse(substring).is_ok() {
-          *substring = new_image_id;
+          *substring = &new_image_id;
           changed = true;
         }
       }
@@ -216,7 +224,7 @@ impl BootParameters {
 
       for substring in &mut nmd_kernel_param_vec {
         if uuid::Uuid::try_parse(substring).is_ok() {
-          *substring = new_image_id;
+          *substring = &new_image_id;
           changed = true;
         }
       }
@@ -384,14 +392,7 @@ impl BootParameters {
     ovwerwrite: bool,
   ) -> bool {
     let mut changed = false;
-    let mut params: HashMap<&str, &str> = self
-      .params
-      .split_whitespace()
-      .map(|kernel_param| {
-        kernel_param.split_once('=').unwrap_or((kernel_param, ""))
-      })
-      .map(|(key, value)| (key.trim(), value.trim()))
-      .collect();
+    let mut params: HashMap<&str, &str> = self.get_kernel_params();
 
     let new_kernel_params_tuple: HashMap<&str, &str> = new_kernel_params
       .split_whitespace()
@@ -410,8 +411,10 @@ impl BootParameters {
             key,
             new_value
           );
-          params.insert(key, new_value);
-          changed = true
+          let old_value = params.insert(key, new_value);
+          if old_value != Some(new_value) {
+            changed = true
+          }
         } else {
           log::info!("key '{}' already exists, the new kernel parameter won't be added since it already exists", key);
         }
@@ -509,7 +512,7 @@ impl BootParameters {
       .map(|(key, value)| (key.trim(), value.trim()))
       .collect();
 
-    let mut params: HashMap<&str, &str> = HashMap::new();
+    let mut params: HashMap<&str, &str> = self.get_kernel_params();
 
     for (new_key, new_value) in &new_params {
       for (key, value) in params.iter_mut() {
