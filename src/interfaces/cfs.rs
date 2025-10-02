@@ -127,6 +127,7 @@ pub trait CfsTrait {
     _xname_vec: Vec<&str>,
     _min_age_opt: Option<&String>,
     _max_age_opt: Option<&String>,
+    _type_opt: Option<&String>,
     _status_opt: Option<&String>,
     _cfs_session_name_opt: Option<&String>,
     _limit_number_opt: Option<&u8>,
