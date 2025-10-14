@@ -73,3 +73,44 @@ pub struct RedfishEndpointArray {
   #[serde(skip_serializing_if = "Option::is_none")]
   pub redfish_endpoints: Option<Vec<RedfishEndpoint>>,
 }
+
+#[derive(Debug, Default, Serialize, Deserialize, Clone)]
+pub struct IpAddressMapping {
+  #[serde(rename = "IPAddress")]
+  pub ip_address: String,
+  #[serde(rename = "Network")]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub network: Option<String>,
+}
+    
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ComponentEthernetInterface {
+  #[serde(rename = "ID")]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub id: Option<String>,
+  #[serde(rename = "Description")]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub description: Option<String>,
+  #[serde(rename = "MACAddress")]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub mac_address: Option<String>,
+  #[serde(rename = "IPAddresses")]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub ip_addresses: Option<Vec<IpAddressMapping>>,
+  #[serde(rename = "LastUpdate")]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub last_update: Option<String>,
+  #[serde(rename = "ComponentID")]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub component_id: Option<String>,
+  #[serde(rename = "Type")]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub parent_hms_type: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ComponentEthernetInterfaceArray {
+  #[serde(rename = "EthernetInterfaces")]
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub ethernet_interfaces: Option<Vec<ComponentEthernetInterface>>,
+}
