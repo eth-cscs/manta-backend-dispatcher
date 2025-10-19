@@ -11,7 +11,7 @@ use std::future::Future;
 pub trait ComponentEthernetInterfaceTrait {
   fn get_all_component_ethernet_interfaces(
     &self,
-    auth_token: &str,
+    _auth_token: &str,
   ) -> impl Future<Output = Result<Vec<ComponentEthernetInterface>, Error>> + Send
   {
     async {
@@ -24,8 +24,8 @@ pub trait ComponentEthernetInterfaceTrait {
 
   fn get_component_ethernet_interface(
     &self,
-    auth_token: &str,
-    eth_interface_id: &str,
+    _auth_token: &str,
+    _eth_interface_id: &str,
   ) -> impl Future<Output = Result<ComponentEthernetInterface, Error>> + Send
   {
     async {
@@ -36,18 +36,25 @@ pub trait ComponentEthernetInterfaceTrait {
     }
   }
 
-  //  fn add_component_ethernet_interface(
-  //    &self,
-  //    auth_token: &str,
-  //    component_ethernet_interface: &ComponentEthernetInterfaceArray,
-  //  ) -> impl Future<Output = Result<(), Error>> + Send;
+  fn add_component_ethernet_interface(
+    &self,
+    _auth_token: &str,
+    _component_ethernet_interface: &ComponentEthernetInterface,
+  ) -> impl Future<Output = Result<(), Error>> + Send {
+    async {
+      Err(Error::Message(
+        "Add component ethernet interface command not implemented for this backend"
+          .to_string(),
+      ))
+    }
+  }
 
   fn update_component_ethernet_interface(
     &self,
-    auth_token: &str,
-    eth_interface_id: &str,
-    description: Option<&str>,
-    ip_address_mapping: (&str, &str),
+    _auth_token: &str,
+    _eth_interface_id: &str,
+    _description: Option<&str>,
+    _ip_address_mapping: (&str, &str),
   ) -> impl Future<Output = Result<Value, Error>> + Send {
     async {
       Err(Error::Message(
@@ -59,7 +66,7 @@ pub trait ComponentEthernetInterfaceTrait {
 
   fn delete_all_component_ethernet_interfaces(
     &self,
-    auth_token: &str,
+    _auth_token: &str,
   ) -> impl Future<Output = Result<Value, Error>> + Send {
     async {
       Err(Error::Message(
@@ -71,8 +78,8 @@ pub trait ComponentEthernetInterfaceTrait {
 
   fn delete_component_ethernet_interface(
     &self,
-    auth_token: &str,
-    eth_interface_id: &str,
+    _auth_token: &str,
+    _eth_interface_id: &str,
   ) -> impl Future<Output = Result<Value, Error>> + Send {
     async {
       Err(Error::Message(
@@ -82,10 +89,10 @@ pub trait ComponentEthernetInterfaceTrait {
     }
   }
 
-  fn get_ip_addresses(
+  /* fn get_ip_addresses(
     &self,
-    auth_token: &str,
-    eth_interface_id: &str,
+    _auth_token: &str,
+    _eth_interface_id: &str,
   ) -> impl Future<Output = Result<Vec<IpAddressMapping>, Error>> + Send {
     async {
       Err(Error::Message(
@@ -96,12 +103,10 @@ pub trait ComponentEthernetInterfaceTrait {
 
   fn delete_ip_address(
     &self,
-    auth_token: &str,
-    //base_url: &str,
-    //root_cert: &[u8],
+    _auth_token: &str,
     _group_label: &str,
-    eth_interface_id: &str,
-    ip_address: &str,
+    _eth_interface_id: &str,
+    _ip_address: &str,
   ) -> impl Future<Output = Result<Value, Error>> + Send {
     async {
       Err(Error::Message(
@@ -109,5 +114,5 @@ pub trait ComponentEthernetInterfaceTrait {
           .to_string(),
       ))
     }
-  }
+  } */
 }
