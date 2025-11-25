@@ -85,7 +85,7 @@ impl BootParameters {
     boot_image_id_opt.unwrap_or("").to_string()
   }
 
-  pub fn try_get_boot_image_id(&self) -> Option<&str> {
+  pub fn try_get_boot_image_id(&self) -> Option<String> {
     let params: HashMap<&str, &str> = self.get_kernel_params();
 
     // NOTE: CN nodes have UIID image id in 'root' kernel parameter
@@ -106,7 +106,7 @@ impl BootParameters {
         None
       };
 
-    boot_image_id_opt
+    boot_image_id_opt.map(|s| s.to_string())
   }
 
   pub fn get_boot_image_etag(&self) -> String {
