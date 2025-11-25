@@ -58,6 +58,9 @@ impl BootParameters {
 
   /// Returns the image id. This function may fail since it assumes kernel path has the following
   // FIXME: Change function signature so it returns a Result<String, Error> instead of String
+  #[deprecated(
+    note = "Use try_get_boot_image_id instead which returns Option<&str>"
+  )]
   pub fn get_boot_image_id(&self) -> String {
     let params: HashMap<&str, &str> = self.get_kernel_params();
 
@@ -80,6 +83,30 @@ impl BootParameters {
       };
 
     boot_image_id_opt.unwrap_or("").to_string()
+  }
+
+  pub fn try_get_boot_image_id(&self) -> Option<&str> {
+    let params: HashMap<&str, &str> = self.get_kernel_params();
+
+    // NOTE: CN nodes have UIID image id in 'root' kernel parameter
+    // Get `root` kernel parameter and split it by '/'
+    let root_kernel_param_opt = params.get("root");
+    // NOTE: NCN nodes have UIID image id in 'metal.server' kernel parameter
+    // Get `root` kernel parameter and split it by '/'
+    let metal_server_kernel_param_opt = params.get("metal.server");
+
+    let boot_image_id_opt: Option<&str> =
+      if let Some(root_kernel_param) = root_kernel_param_opt {
+        Self::get_image_id_from_s3_path(root_kernel_param)
+      } else if let Some(metal_server_kernel_param) =
+        metal_server_kernel_param_opt
+      {
+        Self::get_image_id_from_s3_path(metal_server_kernel_param)
+      } else {
+        None
+      };
+
+    boot_image_id_opt
   }
 
   pub fn get_boot_image_etag(&self) -> String {
