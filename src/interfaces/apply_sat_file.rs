@@ -18,7 +18,7 @@ pub trait SatTrait {
     _ansible_passthrough_opt: Option<&str>,
     _gitea_base_url: &str,
     _gitea_token: &str,
-    _do_not_reboot: bool,
+    _reboot: bool,
     _watch_logs: bool,
     _timestamps: bool,
     _debug_on_failure: bool,
