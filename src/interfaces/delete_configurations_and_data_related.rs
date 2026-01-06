@@ -12,6 +12,7 @@ use crate::{
 
 pub trait DeleteConfigurationsAndDataRelatedTrait {
   fn get_data_to_delete(
+    &self,
     _shasta_token: &str,
     _shasta_base_url: &str,
     _shasta_root_cert: &[u8],
@@ -41,6 +42,7 @@ pub trait DeleteConfigurationsAndDataRelatedTrait {
   }
 
   fn delete(
+    &self,
     _shasta_token: &str,
     _shasta_base_url: &str,
     _shasta_root_cert: &[u8],
