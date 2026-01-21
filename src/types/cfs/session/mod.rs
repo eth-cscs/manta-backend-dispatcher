@@ -92,8 +92,7 @@ pub struct Status {
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct CfsSessionGetResponse {
-  #[serde(skip_serializing_if = "Option::is_none")]
-  pub name: Option<String>,
+  pub name: String,
   #[serde(skip_serializing_if = "Option::is_none")]
   pub configuration: Option<Configuration>,
   #[serde(skip_serializing_if = "Option::is_none")]
