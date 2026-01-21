@@ -43,9 +43,9 @@ pub trait CfsTrait {
   ) -> impl Future<Output = Result<Self::T, Error>> {
     async {
       Err(Error::Message(
-                "Get session logs stream by xname command not implemented for this backend"
-                    .to_string(),
-            ))
+        "Get session logs stream by xname command not implemented for this backend"
+            .to_string(),
+      ))
     }
   }
 
@@ -94,30 +94,6 @@ pub trait CfsTrait {
     }
   }
 
-  /* fn get_sessions_by_xname(
-    &self,
-    _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
-    _xname_vec: &[&str],
-    _limit_opt: Option<u8>,
-    _after_id_opt: Option<String>,
-    _min_age_opt: Option<String>,
-    _max_age_opt: Option<String>,
-    _status_opt: Option<String>,
-    _name_contains_opt: Option<String>,
-    _is_succeded_opt: Option<bool>,
-    _tags_opt: Option<String>,
-  ) -> impl Future<Output = Result<Vec<CfsSessionGetResponse>, Error>> + Send
-  {
-    async {
-      Err(Error::Message(
-        "Get sessions by xname command not implemented for this backend"
-          .to_string(),
-      ))
-    }
-  } */
-
   fn get_and_filter_sessions(
     &self,
     _shasta_token: &str,
@@ -165,7 +141,7 @@ pub trait CfsTrait {
     _shasta_root_cert: &[u8],
     _configuration_name: Option<&str>,
     _configuration_name_pattern: Option<&str>,
-    _hsm_group_name_vec: &[&str],
+    _hsm_group_name_vec: &[String],
     _since_opt: Option<NaiveDateTime>,
     _until_opt: Option<NaiveDateTime>,
     _limit_number_opt: Option<&u8>,
@@ -189,9 +165,9 @@ pub trait CfsTrait {
   ) -> impl Future<Output = Result<LayerDetails, Error>> + Send {
     async {
       Err(Error::Message(
-                "Get configuration layer details command not implemented for this backend"
-                    .to_string(),
-            ))
+        "Get configuration layer details command not implemented for this backend"
+            .to_string(),
+      ))
     }
   }
 
@@ -206,9 +182,9 @@ pub trait CfsTrait {
   ) -> impl Future<Output = Result<CfsConfigurationRequest, Error>> {
     async {
       Err(Error::Message(
-                "Create configuration from repos command not implemented for this backend"
-                    .to_string(),
-            ))
+        "Create configuration from repos command not implemented for this backend"
+            .to_string(),
+      ))
     }
   }
 
@@ -237,7 +213,7 @@ pub trait CfsTrait {
     _shasta_token: &str,
     _shasta_base_url: &str,
     _shasta_root_cert: &[u8],
-    _xnames: Vec<String>,
+    _xnames: &[String],
     _desired_configuration: &str,
     _enabled: bool,
   ) -> impl Future<Output = Result<(), Error>> + Send {

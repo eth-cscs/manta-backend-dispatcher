@@ -24,7 +24,7 @@ pub trait GroupTrait {
   fn get_member_vec_from_group_name_vec(
     &self,
     auth_token: &str,
-    hsm_group_name_vec: &[&str],
+    hsm_group_name_vec: &[String],
   ) -> impl std::future::Future<Output = Result<Vec<String>, Error>> + Send;
 
   fn get_group_map_and_filter_by_group_vec(

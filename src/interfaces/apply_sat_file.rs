@@ -13,7 +13,7 @@ pub trait SatTrait {
     _k8s_api_url: &str,
     _shasta_k8s_secrets: serde_json::Value,
     _sat_template_file_yaml: serde_yaml::Value,
-    _hsm_group_available_vec: &[&str],
+    _hsm_group_available_vec: &[String],
     _ansible_verbosity_opt: Option<u8>,
     _ansible_passthrough_opt: Option<&str>,
     _gitea_base_url: &str,

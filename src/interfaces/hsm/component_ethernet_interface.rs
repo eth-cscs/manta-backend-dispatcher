@@ -1,10 +1,4 @@
-use crate::{
-  error::Error,
-  types::hsm::inventory::{
-    ComponentEthernetInterface, ComponentEthernetInterfaceArray,
-    IpAddressMapping,
-  },
-};
+use crate::{error::Error, types::hsm::inventory::ComponentEthernetInterface};
 use serde_json::Value;
 use std::future::Future;
 
