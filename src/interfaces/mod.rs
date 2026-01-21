@@ -7,7 +7,6 @@ pub mod bss;
 pub mod cfs;
 pub mod console;
 pub mod delete_configurations_and_data_related;
-pub mod get_images_and_details;
 pub mod hsm;
 pub mod ims;
 pub mod migrate_backup;
