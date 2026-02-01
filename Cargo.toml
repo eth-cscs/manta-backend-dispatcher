@@ -21,7 +21,7 @@ futures-io = "0.3.31"
 tokio = { version = "1.45", features = ["macros", "rt-multi-thread"] }
 serde_yaml = "0.9.34"
 rdkafka = { version = "0.37", features = ["cmake-build"] }
-chrono = { version = "0.4.41", default-features = false }
+chrono = { version = "0.4.43"}
 
 # The profile that 'dist' will build with
 [profile.dist]

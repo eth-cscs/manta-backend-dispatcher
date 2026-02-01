@@ -1,28 +1,29 @@
-use serde_json::Value;
+use chrono::Local;
 
 use crate::error::Error;
 use crate::types::pcs::power_status::types::PowerStatusAll;
+use crate::types::pcs::transitions::types::TransitionResponse;
 
 pub trait PCSTrait {
   fn power_on_sync(
     &self,
     _auth_token: &str,
     _nodes: &[String],
-  ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+  ) -> impl std::future::Future<Output = Result<TransitionResponse, Error>> + Send;
 
   fn power_off_sync(
     &self,
     _auth_token: &str,
     _nodes: &[String],
     _force: bool,
-  ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+  ) -> impl std::future::Future<Output = Result<TransitionResponse, Error>> + Send;
 
   fn power_reset_sync(
     &self,
     _auth_token: &str,
     _nodes: &[String],
     _force: bool,
-  ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+  ) -> impl std::future::Future<Output = Result<TransitionResponse, Error>> + Send;
 
   // FIXME: Create a new type PowerStatus and return Result<PowerStatus, Error>
   fn power_status(
