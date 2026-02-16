@@ -1,7 +1,7 @@
 [package]
 name = "manta-backend-dispatcher"
 version = "0.20.0"
-edition = "2021"
+edition = "2024"
 license-file = "LICENSE"
 description = "Traits to be developed by Mesa backends"
 documentation = "https://github.com/eth-cscs/manta-backend-dispatcher/blob/main/README.md"

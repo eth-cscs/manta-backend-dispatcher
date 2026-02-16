@@ -1,5 +1,6 @@
 use std::future::Future;
 
+use crate::types::Group;
 use crate::types::bss::BootParameters;
 use crate::types::cfs::cfs_configuration_details::LayerDetails;
 use crate::types::cfs::cfs_configuration_request::CfsConfigurationRequest;
@@ -9,8 +10,7 @@ use crate::types::cfs::cfs_configuration_response::{
 use crate::types::cfs::component::Component;
 use crate::types::cfs::session::CfsSessionPostRequest;
 use crate::types::ims::Image;
-use crate::types::Group;
-use crate::types::{bos::session_template::BosSessionTemplate, K8sDetails};
+use crate::types::{K8sDetails, bos::session_template::BosSessionTemplate};
 use crate::{error::Error, types::cfs::session::CfsSessionGetResponse};
 use chrono::NaiveDateTime;
 
