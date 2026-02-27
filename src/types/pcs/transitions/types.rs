@@ -75,3 +75,10 @@ pub struct TransitionResponse {
 pub struct TransitionResponseList {
   pub transitions: Vec<TransitionResponse>,
 }
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct TransitionStartOutput {
+  #[serde(rename = "transitionID")]
+  pub transition_id: String,
+  pub operation: Operation,
+}
