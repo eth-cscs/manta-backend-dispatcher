@@ -1,5 +1,3 @@
-use chrono::Local;
-
 use crate::error::Error;
 use crate::types::pcs::power_status::types::PowerStatusAll;
 use crate::types::pcs::transitions::types::TransitionResponse;
