@@ -226,19 +226,17 @@ impl CfsSessionGetResponse {
       .and_then(|configuration| configuration.name.clone())
   }
 
-  /// Returns 'true' if CFS session succeeded
+  /// Returns 'true' if CFS session succeeded.
+  ///
+  /// Returns `false` when any of the status fields are missing,
+  /// rather than panicking.
   pub fn is_success(&self) -> bool {
     self
       .status
       .as_ref()
-      .unwrap()
-      .session
-      .as_ref()
-      .unwrap()
-      .succeeded
-      .as_ref()
-      .unwrap()
-      == "true"
+      .and_then(|status| status.session.as_ref())
+      .and_then(|session| session.succeeded.as_ref())
+      .is_some_and(|v| v == "true")
   }
 }
 
