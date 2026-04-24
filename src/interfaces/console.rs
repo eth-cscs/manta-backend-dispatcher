@@ -6,8 +6,8 @@ use crate::{error::Error, types::K8sDetails};
 
 /// This trait returns a tuple like `(stdin, stdout, stderr)`
 pub trait ConsoleTrait {
-  type T: AsyncWrite + Unpin;
-  type U: AsyncRead + Unpin;
+  type T: AsyncWrite + Unpin + Send;
+  type U: AsyncRead + Unpin + Send;
 
   fn attach_to_node_console(
     &self,
