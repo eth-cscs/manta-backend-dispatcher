@@ -32,4 +32,42 @@ pub enum Error {
   // from CSM does not provide it
   #[error("Authentication token not found in {0}")]
   AuthenticationTokenNotFound(String),
+  #[error("Not found: {0}")]
+  NotFound(String),
+  #[error("Bad request: {0}")]
+  BadRequest(String),
+  #[error("Conflict: {0}")]
+  Conflict(String),
+  #[error("ERROR - TOML parse: {0}")]
+  TomlEditError(#[from] toml_edit::TomlError),
+  #[error("ERROR - TOML serialize: {0}")]
+  TomlSerError(#[from] toml::ser::Error),
+  #[error("ERROR - Config: {0}")]
+  ConfigError(#[from] config::ConfigError),
+  #[error("ERROR - Dialoguer: {0}")]
+  DialoguerError(#[from] dialoguer::Error),
+  #[error("ERROR - K8s: {0}")]
+  K8sError(String),
+  #[error("YAML error: {0}")]
+  YamlError(#[from] serde_yaml::Error),
+  #[error("Template render error: {0}")]
+  TemplateError(String),
+  #[error("JWT malformed: {0}")]
+  JwtMalformed(String),
+  #[error("Invalid hardware pattern: {0}")]
+  InvalidPattern(String),
+  #[error("Insufficient resources: {0}")]
+  InsufficientResources(String),
+  #[error("Missing field: {0}")]
+  MissingField(String),
+  #[error("Unsupported backend: {0}")]
+  UnsupportedBackend(String),
+  #[error("Invalid node ID: {0}")]
+  InvalidNodeId(String),
+  #[error("Kafka error: {0}")]
+  KafkaError(String),
+  #[error("Hook error: {0}")]
+  HookError(String),
+  #[error("Local git error: {0}")]
+  LocalGitError(String),
 }

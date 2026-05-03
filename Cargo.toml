@@ -22,6 +22,10 @@ tokio = { version = "1.45", features = ["macros", "rt-multi-thread"] }
 serde_yaml = "0.9.34"
 rdkafka = { version = "0.37", features = ["cmake-build"] }
 chrono = { version = "0.4.43"}
+toml = "0.8"
+toml_edit = "0.22"
+config = { version = "0.15", default-features = false }
+dialoguer = { version = "0.12", default-features = false }
 
 # The profile that 'dist' will build with
 [profile.dist]
