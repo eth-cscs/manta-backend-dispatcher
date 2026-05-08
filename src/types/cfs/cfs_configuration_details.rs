@@ -39,7 +39,7 @@ impl fmt::Display for ConfigurationDetails {
 }
 
 pub struct LayerDetails {
-  pub name: String,
+  pub name: Option<String>,
   pub repo_name: String,
   pub commit_id: String,
   pub author: String,
@@ -51,7 +51,7 @@ pub struct LayerDetails {
 
 impl LayerDetails {
   pub fn new(
-    name: &str,
+    name: Option<String>,
     repo_name: &str,
     commit_id: &str,
     author: &str,
@@ -62,7 +62,7 @@ impl LayerDetails {
     // most_recent_commit: bool,
   ) -> Self {
     Self {
-      name: String::from(name),
+      name: name,
       repo_name: String::from(repo_name),
       commit_id: String::from(commit_id),
       author: String::from(author),
@@ -80,7 +80,7 @@ impl fmt::Display for LayerDetails {
     write!(
             f,
             "\n - name: {}\n - repo name: {}\n - commit id: {}\n - commit date: {}\n - author: {}\n - branch: {}\n - tag: {}\n - playbook: {}",
-            self.name, self.repo_name, self.commit_id, self.commit_date, self.author, self.branch, self.tag, self.playbook
+            self.name.as_ref().unwrap_or(&String::new()), self.repo_name, self.commit_id, self.commit_date, self.author, self.branch, self.tag, self.playbook
         )
   }
 }
