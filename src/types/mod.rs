@@ -639,7 +639,7 @@ impl ArtifactSummary {
 }
 
 // From OCHAMI API
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, utoipa::ToSchema)]
 pub struct Group {
   pub label: String,
   #[serde(skip_serializing_if = "Option::is_none")]
@@ -653,12 +653,12 @@ pub struct Group {
   pub exclusive_group: Option<String>,
 }
 
-#[derive(Debug, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, Serialize, Deserialize, Default, Clone, utoipa::ToSchema)]
 pub struct Member {
   #[serde(skip_serializing_if = "Option::is_none")]
   pub ids: Option<Vec<String>>,
 }
-#[derive(Debug, Serialize, Deserialize, Default, Clone)]
+#[derive(Debug, Serialize, Deserialize, Default, Clone, utoipa::ToSchema)]
 pub struct XnameId {
   #[serde(skip_serializing_if = "Option::is_none")]
   pub id: Option<String>,
