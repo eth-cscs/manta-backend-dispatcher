@@ -13,7 +13,7 @@
 //! sessions. In `dry_run` mode the same tuple is returned with the
 //! artifacts that *would* be created.
 
-use std::future::Future;
+use std::{collections::HashMap, future::Future};
 
 use crate::{
   error::Error,
@@ -82,6 +82,66 @@ pub struct ApplySatFileParams<'a> {
   pub dry_run: bool,
 }
 
+/// Parameters for [`SatTrait::apply_configuration`].
+pub struct ApplyConfigurationParams<'a> {
+  pub shasta_token: &'a str,
+  pub shasta_base_url: &'a str,
+  pub shasta_root_cert: &'a [u8],
+  pub socks5_proxy: Option<&'a str>,
+  pub vault_base_url: &'a str,
+  pub site_name: &'a str,
+  pub k8s_api_url: &'a str,
+  pub gitea_base_url: &'a str,
+  pub gitea_token: &'a str,
+  /// One SAT `configurations[]` entry as a structured value.
+  pub configuration: serde_json::Value,
+  pub dry_run: bool,
+  pub overwrite: bool,
+}
+
+/// Parameters for [`SatTrait::apply_image`].
+pub struct ApplyImageParams<'a> {
+  pub shasta_token: &'a str,
+  pub shasta_base_url: &'a str,
+  pub shasta_root_cert: &'a [u8],
+  pub socks5_proxy: Option<&'a str>,
+  pub vault_base_url: &'a str,
+  pub site_name: &'a str,
+  pub k8s_api_url: &'a str,
+  /// One SAT `images[]` entry as a structured value.
+  pub image: serde_json::Value,
+  /// `ref_name.or(name) -> image_id` for previously-created images. The
+  /// CLI accumulates this across image and session_template calls;
+  /// csm-rs's per-image creator consumes it to resolve
+  /// `base.image_ref` chains.
+  pub ref_lookup: HashMap<String, String>,
+  pub hsm_group_available_vec: &'a [String],
+  pub ansible_verbosity: Option<u8>,
+  pub ansible_passthrough: Option<&'a str>,
+  pub debug_on_failure: bool,
+  pub watch_logs: bool,
+  pub timestamps: bool,
+  pub dry_run: bool,
+}
+
+/// Parameters for [`SatTrait::apply_session_template`].
+pub struct ApplySessionTemplateParams<'a> {
+  pub shasta_token: &'a str,
+  pub shasta_base_url: &'a str,
+  pub shasta_root_cert: &'a [u8],
+  pub socks5_proxy: Option<&'a str>,
+  /// One SAT `session_templates[]` entry as a structured value.
+  pub session_template: serde_json::Value,
+  /// `ref_name.or(name) -> image_id` for previously-created images.
+  /// Used to resolve `session_template.image.image_ref`.
+  pub ref_lookup: HashMap<String, String>,
+  pub hsm_group_available_vec: &'a [String],
+  /// Trigger a BOS session to reboot the targeted nodes after the
+  /// template is created.
+  pub reboot: bool,
+  pub dry_run: bool,
+}
+
 pub trait SatTrait {
   /// Apply a pre-rendered SAT file.
   ///
@@ -113,6 +173,64 @@ pub trait SatTrait {
     async {
       Err(Error::Message(
         "Apply SAT file command not implemented for this backend".to_string(),
+      ))
+    }
+  }
+
+  /// Apply a single SAT `configurations[]` entry.
+  ///
+  /// The backend validates the entry against live CSM state, converts
+  /// the SAT shape into a `CfsConfigurationRequest` (resolving any
+  /// `product:` layers via the cray-product-catalog ConfigMap and any
+  /// `git:` branches via Gitea), POSTs it to CFS, and returns the
+  /// created configuration (or, in `dry_run`, a mock response with the
+  /// configuration's name).
+  fn apply_configuration(
+    &self,
+    _params: ApplyConfigurationParams<'_>,
+  ) -> impl Future<Output = Result<CfsConfigurationResponse, Error>> + Send
+  {
+    async {
+      Err(Error::Message(
+        "Apply configuration command not implemented for this backend"
+          .to_string(),
+      ))
+    }
+  }
+
+  /// Apply a single SAT `images[]` entry.
+  ///
+  /// The backend validates the entry, resolves any `base.image_ref`
+  /// against `params.ref_lookup`, constructs the CFS session that
+  /// builds the image, runs it (unless `dry_run`), and returns the
+  /// created IMS image.
+  fn apply_image(
+    &self,
+    _params: ApplyImageParams<'_>,
+  ) -> impl Future<Output = Result<Image, Error>> + Send {
+    async {
+      Err(Error::Message(
+        "Apply image command not implemented for this backend".to_string(),
+      ))
+    }
+  }
+
+  /// Apply a single SAT `session_templates[]` entry.
+  ///
+  /// The backend validates the entry, resolves `image.image_ref`
+  /// against `params.ref_lookup`, creates the BOS session template,
+  /// and (if `params.reboot`) creates a BOS session to reboot the
+  /// targeted nodes through it.
+  fn apply_session_template(
+    &self,
+    _params: ApplySessionTemplateParams<'_>,
+  ) -> impl Future<
+    Output = Result<(BosSessionTemplate, Option<BosSession>), Error>,
+  > + Send {
+    async {
+      Err(Error::Message(
+        "Apply session template command not implemented for this backend"
+          .to_string(),
       ))
     }
   }
