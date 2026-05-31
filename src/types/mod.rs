@@ -3,7 +3,6 @@ pub mod bss;
 pub mod cfs;
 pub mod hsm;
 pub mod ims;
-pub mod kafka;
 pub mod pcs;
 
 use std::str::FromStr;
