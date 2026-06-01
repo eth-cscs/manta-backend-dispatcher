@@ -16,10 +16,18 @@ pub enum Error {
     payload: String, // NOTE: CSM/OCHAMI Apis either returns plain text or a json therefore, we
                      // will just return a String
   },
-  /* #[error("ERROR - Backend: {0}")]
-  CsmError(Value), */
-  #[error("CSM-RS > CSM: {}", .0.get("detail").and_then(|detail| detail.as_str()).unwrap_or("Unknown error"))]
-  CsmError(Value),
+  /// Structured error payload returned by CSM/HSM endpoints when an
+  /// HTTP request fails. `status` is the HTTP status code, `detail` is
+  /// the human-readable message extracted from the RFC 7807
+  /// `Problem7807` body (`detail` field, falling back to `title`), and
+  /// `body` retains the raw JSON so callers needing extension fields
+  /// can still reach them without string-parsing the Display output.
+  #[error("CSM API: status={status} {detail}")]
+  CsmError {
+    status: u16,
+    detail: String,
+    body: Option<Value>,
+  },
   #[error("ERROR - Console: {0}")]
   ConsoleError(String),
   #[error("ERROR - CFS Configuration already exists: {0}")]

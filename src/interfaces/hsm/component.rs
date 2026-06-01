@@ -1,8 +1,9 @@
 use crate::{
   error::Error,
-  types::{Component, ComponentArrayPostArray, NodeMetadataArray},
+  types::{
+    Component, ComponentArrayPostArray, HsmActionResponse, NodeMetadataArray,
+  },
 };
-use serde_json::Value;
 
 pub trait ComponentTrait {
   fn get_all_nodes(
@@ -53,7 +54,7 @@ pub trait ComponentTrait {
     &self,
     auth_token: &str,
     id: &str,
-  ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+  ) -> impl std::future::Future<Output = Result<HsmActionResponse, Error>> + Send;
 
   /// Get list of xnames from NIDs
   /// The list of NIDs can be:

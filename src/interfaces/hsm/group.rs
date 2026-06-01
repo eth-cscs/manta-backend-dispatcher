@@ -1,8 +1,9 @@
 use std::collections::HashMap;
 
-use serde_json::Value;
-
-use crate::{error::Error, types::Group};
+use crate::{
+  error::Error,
+  types::{Group, HsmActionResponse},
+};
 
 pub trait GroupTrait {
   fn get_group_available(
@@ -62,7 +63,7 @@ pub trait GroupTrait {
     &self,
     _auth_token: &str,
     _hsm_group_label: &str,
-  ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+  ) -> impl std::future::Future<Output = Result<HsmActionResponse, Error>> + Send;
 
   fn get_hsm_map_and_filter_by_hsm_name_vec(
     &self,
@@ -76,7 +77,7 @@ pub trait GroupTrait {
     auth_token: &str,
     group_label: &str,
     members: &str,
-  ) -> impl std::future::Future<Output = Result<Value, Error>> + Send;
+  ) -> impl std::future::Future<Output = Result<HsmActionResponse, Error>> + Send;
 
   fn add_members_to_group(
     &self,

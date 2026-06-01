@@ -164,8 +164,7 @@ impl Into<HWInventoryByLocation> for NodeSummary {
             ordinal: None,
             status: None,
             node_location_info,
-            hw_inventory_by_location_type: self.r#type,
-            populated_fru: Some(hw_inv_by_fr_node),
+                  populated_fru: Some(hw_inv_by_fr_node),
             cabinets: None,
             chassis: None,
             compute_modules: None,
@@ -276,7 +275,6 @@ impl Into<HWInvByLocNode> for NodeSummary {
       r#type: Some(self.r#type.clone()),
       ordinal: None,
       status: None,
-      hw_inventory_by_location_type: self.r#type,
       populated_fru: Some(hw_inv_by_fr_node),
       node_location_info: None,
       processors: Some(
@@ -415,7 +413,6 @@ impl Into<HWInvByLocProcessor> for ArtifactSummary {
       r#type: Some(self.r#type.to_string()),
       ordinal: None,
       status: None,
-      hw_inventory_by_location_type: self.r#type.to_string(),
       populated_fru: Some(hw_inv_by_fru_processor),
       processor_location_info,
     }
@@ -482,7 +479,6 @@ impl Into<HWInvByLocMemory> for ArtifactSummary {
       r#type: Some(self.r#type.to_string()),
       ordinal: None,
       status: None,
-      hw_inventory_by_location_type: self.r#type.to_string(),
       populated_fru: Some(hw_inv_by_fru_memory),
       memory_location_info: redfish_memory_location_info,
     }
@@ -530,7 +526,6 @@ impl Into<HWInvByLocNodeAccel> for ArtifactSummary {
       r#type: Some(self.r#type.to_string()),
       ordinal: None,
       status: None,
-      hw_inventory_by_location_type: self.r#type.to_string(),
       populated_fru: Some(hw_inv_by_fru_node_accel),
       node_accel_location_info: None,
     }
@@ -580,7 +575,6 @@ impl Into<HWInvByLocHSNNIC> for ArtifactSummary {
       r#type: Some(self.r#type.to_string()),
       ordinal: None,
       status: None,
-      hw_inventory_by_location_type: self.r#type.to_string(),
       populated_fru: Some(hw_inv_by_fru_hsn_nic),
       hsn_nic_location_info,
     }
@@ -1125,8 +1119,6 @@ pub struct HWInvByLocChassis {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1154,8 +1146,6 @@ pub struct HWInvByLocNodeEnclosure {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1177,8 +1167,6 @@ pub struct HWInvByLocComputeModule {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1203,8 +1191,6 @@ pub struct HWInvByLocHSNBoard {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1226,8 +1212,6 @@ pub struct HWInvByLocRouterModule {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1250,8 +1234,6 @@ pub struct HWInvByLocCabinet {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1276,8 +1258,6 @@ pub struct HWInvByLocMgmtSwitch {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1299,8 +1279,6 @@ pub struct HWInvByLocMgmtHLSwitch {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1322,8 +1300,6 @@ pub struct HWInvByLocCDUMgmtSwitch {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1400,8 +1376,6 @@ pub struct HWInvByLocProcessor {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInvByFRUProcessor>,
@@ -1422,8 +1396,6 @@ pub struct HWInvByLocNodeAccel {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInvByFRUNodeAccel>,
@@ -1458,8 +1430,6 @@ pub struct HWInvByLocDrive {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1513,8 +1483,6 @@ pub struct HWInvByLocMemory {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInvByFRUMemory>,
@@ -1545,8 +1513,6 @@ pub struct HWInvByLocNodeAccelRiser {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1581,8 +1547,6 @@ pub struct HWInvByLocHSNNIC {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInvByFRUHSNNIC>,
@@ -1672,8 +1636,6 @@ pub struct HWInvByLocNode {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInvByFRUNode>,
@@ -1742,8 +1704,6 @@ pub struct HWInvByLocOutlet {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1765,8 +1725,6 @@ pub struct HWInvByLocPDU {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1801,8 +1759,6 @@ pub struct HWInvByLocCMMRectifier {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1834,8 +1790,6 @@ pub struct HWInvByLocNodePowerSupply {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1880,8 +1834,6 @@ pub struct HWInvByLocNodeBMC {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -1903,8 +1855,6 @@ pub struct HWInvByLocRouterBMC {
   #[serde(rename = "Status")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub status: Option<String>,
-  #[serde(rename = "HWInventoryByLocationType")]
-  pub hw_inventory_by_location_type: String,
   #[serde(rename = "PopulatedFRU")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub populated_fru: Option<HWInventoryByFRU>,
@@ -2023,31 +1973,34 @@ pub struct NodeLocationInfo {
   pub memory_summary: Option<MemorySummary>,
 }
 
+// Internally tagged: the wire format puts the discriminator in the
+// `HWInventoryByLocationType` field alongside the variant's other fields.
+// Tag value matches the Rust variant name (e.g. `HWInvByLocCabinet`).
 #[derive(Debug, Serialize, Deserialize, Clone)]
-#[serde(untagged)] // <-- this is important. More info https://serde.rs/enum-representations.html#untagged
+#[serde(tag = "HWInventoryByLocationType")]
 pub enum HWInventoryByLocation {
-  /* HWInvByLocCabinet(HWInvByLocCabinet),
+  HWInvByLocCDUMgmtSwitch(HWInvByLocCDUMgmtSwitch),
+  HWInvByLocCMMRectifier(HWInvByLocCMMRectifier),
+  HWInvByLocCabinet(HWInvByLocCabinet),
   HWInvByLocChassis(HWInvByLocChassis),
   HWInvByLocComputeModule(HWInvByLocComputeModule),
-  HWInvByLocRouterModule(HWInvByLocRouterModule),
-  HWInvByLocNodeEnclosure(HWInvByLocNodeEnclosure),
+  HWInvByLocDrive(HWInvByLocDrive),
   HWInvByLocHSNBoard(HWInvByLocHSNBoard),
-  HWInvByLocMgmtSwitch(HWInvByLocMgmtSwitch),
-  HWInvByLocMgmtHLSwitch(HWInvByLocMgmtHLSwitch),
-  HWInvByLocCDUMgmtSwitch(HWInvByLocCDUMgmtSwitch), */
-  HWInvByLocNode(HWInvByLocNode),
-  HWInvByLocProcessor(HWInvByLocProcessor),
-  HWInvByLocNodeAccel(HWInvByLocNodeAccel),
-  /*     HWInvByLocDrive(HWInvByLocDrive), */
-  HWInvByLocMemory(HWInvByLocMemory),
-  /* HWInvByLocPDU(HWInvByLocPDU),
-  HWInvByLocOutlet(HWInvByLocOutlet),
-  HWInvByLocCMMRectifier(HWInvByLocCMMRectifier),
-  HWInvByLocNodeAccelRiser(HWInvByLocNodeAccelRiser), */
   HWInvByLocHSNNIC(HWInvByLocHSNNIC),
-  /* HWInvByLocNodePowerSupply(HWInvByLocNodePowerSupply),
+  HWInvByLocMemory(HWInvByLocMemory),
+  HWInvByLocMgmtHLSwitch(HWInvByLocMgmtHLSwitch),
+  HWInvByLocMgmtSwitch(HWInvByLocMgmtSwitch),
+  HWInvByLocNode(HWInvByLocNode),
+  HWInvByLocNodeAccel(HWInvByLocNodeAccel),
+  HWInvByLocNodeAccelRiser(HWInvByLocNodeAccelRiser),
   HWInvByLocNodeBMC(HWInvByLocNodeBMC),
-  HWInvByLocRouterBMC(HWInvByLocRouterBMC), */
+  HWInvByLocNodeEnclosure(HWInvByLocNodeEnclosure),
+  HWInvByLocNodePowerSupply(HWInvByLocNodePowerSupply),
+  HWInvByLocOutlet(HWInvByLocOutlet),
+  HWInvByLocPDU(HWInvByLocPDU),
+  HWInvByLocProcessor(HWInvByLocProcessor),
+  HWInvByLocRouterBMC(HWInvByLocRouterBMC),
+  HWInvByLocRouterModule(HWInvByLocRouterModule),
 }
 
 /// struct used in POST and GET endpoints that manage multiple instances of 'HWInventoryByLocation'
@@ -2056,4 +2009,16 @@ pub struct HWInventoryByLocationList {
   #[serde(rename = "Hardware")]
   #[serde(skip_serializing_if = "Option::is_none")]
   pub hardware: Option<Vec<HWInventoryByLocation>>,
+}
+
+/// Success-path acknowledgement from HSM mutating endpoints (POST,
+/// DELETE, PATCH). Mirrors the swagger `Response_1.0.0` schema: a
+/// CAPMC-style `{ code, message }` pair, where `message` typically
+/// carries a count of new/modified/deleted items. Error responses use
+/// `Problem7807` (surfaced via [`Error::CsmError`](crate::error::Error::CsmError))
+/// instead of this shape.
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct HsmActionResponse {
+  pub code: String,
+  pub message: String,
 }
