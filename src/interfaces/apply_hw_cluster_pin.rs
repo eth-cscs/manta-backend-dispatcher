@@ -6,8 +6,6 @@ pub trait ApplyHwClusterPin {
   fn apply_hw_cluster_pin(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _target_hsm_group_name: &str,
     _parent_hsm_group_name: &str,
     _pattern: &str,

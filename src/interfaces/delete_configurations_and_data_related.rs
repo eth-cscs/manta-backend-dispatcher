@@ -14,8 +14,6 @@ pub trait DeleteConfigurationsAndDataRelatedTrait {
   fn get_data_to_delete(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _hsm_name_available_vec: &[String],
     _configuration_name_pattern_opt: Option<&str>,
     _since_opt: Option<NaiveDateTime>,
@@ -44,8 +42,6 @@ pub trait DeleteConfigurationsAndDataRelatedTrait {
   fn delete(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _cfs_configuration_name_vec: &[String],
     _image_id_vec: &[String],
     _cfs_session_name_vec: &[String],

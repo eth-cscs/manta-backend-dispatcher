@@ -60,8 +60,6 @@ pub trait CfsTrait {
   fn post_session(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _session: &CfsSessionPostRequest,
   ) -> impl Future<Output = Result<CfsSessionGetResponse, Error>> + Send {
     async {
@@ -74,8 +72,6 @@ pub trait CfsTrait {
   fn get_sessions(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _session_name_opt: Option<&String>,
     _limit_opt: Option<u8>,
     _after_id_opt: Option<String>,
@@ -97,8 +93,6 @@ pub trait CfsTrait {
   fn get_and_filter_sessions(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _hsm_group_name_vec: Vec<String>,
     _xname_vec: Vec<&str>,
     _min_age_opt: Option<&String>,
@@ -121,8 +115,6 @@ pub trait CfsTrait {
   fn get_configuration(
     &self,
     _auth_token: &str,
-    _base_url: &str,
-    _root_cert: &[u8],
     _configuration_name_opt: Option<&String>,
   ) -> impl Future<Output = Result<Vec<CfsConfigurationResponse>, Error>> + Send
   {
@@ -137,8 +129,6 @@ pub trait CfsTrait {
   fn get_and_filter_configuration(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _configuration_name: Option<&str>,
     _configuration_name_pattern: Option<&str>,
     _hsm_group_name_vec: &[String],
@@ -157,7 +147,6 @@ pub trait CfsTrait {
 
   fn get_configuration_layer_details(
     &self,
-    _shasta_root_cert: &[u8],
     _gitea_base_url: &str,
     _gitea_token: &str,
     _layer: Layer,
@@ -175,7 +164,6 @@ pub trait CfsTrait {
     &self,
     _gitea_token: &str,
     _gitea_base_url: &str,
-    _shasta_root_cert: &[u8],
     _repo_name_vec: &[&str],
     _local_git_commit_vec: &[&str],
     _playbook_file_name_opt: Option<&str>,
@@ -194,8 +182,6 @@ pub trait CfsTrait {
   fn put_configuration(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _configuration: &CfsConfigurationRequest,
     _configuration_name: &str,
     _overwrite: bool,
@@ -211,8 +197,6 @@ pub trait CfsTrait {
   fn update_runtime_configuration(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _xnames: &[String],
     _desired_configuration: &str,
     _enabled: bool,
@@ -229,8 +213,6 @@ pub trait CfsTrait {
   fn get_derivatives(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _configuration_name: &str,
   ) -> impl Future<
     Output = Result<
@@ -252,8 +234,6 @@ pub trait CfsTrait {
   fn get_cfs_components(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _configuration_name: Option<&str>,
     _components_ids: Option<&str>,
     _status: Option<&str>,
@@ -269,8 +249,6 @@ pub trait CfsTrait {
   fn delete_and_cancel_session(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _group_available_vec: &[Group],
     _cfs_session: &CfsSessionGetResponse,
     _cfs_component_vec: &[Component],

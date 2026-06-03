@@ -35,13 +35,6 @@ pub struct ApplySatFileParams<'a> {
   /// Bearer token authenticating the caller against the backend (and
   /// against Vault, when the backend fetches its own K8s creds).
   pub shasta_token: &'a str,
-  /// Backend (CSM / OCHAMI) API base URL.
-  pub shasta_base_url: &'a str,
-  /// PEM-encoded root certificate trusted for the backend's HTTPS API.
-  pub shasta_root_cert: &'a [u8],
-  /// Optional SOCKS5 proxy URL applied to every HTTP call the backend
-  /// makes.
-  pub socks5_proxy: Option<&'a str>,
   /// Vault base URL. The backend uses this to fetch the Kubernetes
   /// secrets it needs to read the `cray-product-catalog` ConfigMap.
   pub vault_base_url: &'a str,
@@ -85,9 +78,6 @@ pub struct ApplySatFileParams<'a> {
 /// Parameters for [`SatTrait::apply_configuration`].
 pub struct ApplyConfigurationParams<'a> {
   pub shasta_token: &'a str,
-  pub shasta_base_url: &'a str,
-  pub shasta_root_cert: &'a [u8],
-  pub socks5_proxy: Option<&'a str>,
   pub vault_base_url: &'a str,
   pub site_name: &'a str,
   pub k8s_api_url: &'a str,
@@ -102,9 +92,6 @@ pub struct ApplyConfigurationParams<'a> {
 /// Parameters for [`SatTrait::apply_image`].
 pub struct ApplyImageParams<'a> {
   pub shasta_token: &'a str,
-  pub shasta_base_url: &'a str,
-  pub shasta_root_cert: &'a [u8],
-  pub socks5_proxy: Option<&'a str>,
   pub vault_base_url: &'a str,
   pub site_name: &'a str,
   pub k8s_api_url: &'a str,
@@ -127,9 +114,6 @@ pub struct ApplyImageParams<'a> {
 /// Parameters for [`SatTrait::apply_session_template`].
 pub struct ApplySessionTemplateParams<'a> {
   pub shasta_token: &'a str,
-  pub shasta_base_url: &'a str,
-  pub shasta_root_cert: &'a [u8],
-  pub socks5_proxy: Option<&'a str>,
   /// One SAT `session_templates[]` entry as a structured value.
   pub session_template: serde_json::Value,
   /// `ref_name.or(name) -> image_id` for previously-created images.

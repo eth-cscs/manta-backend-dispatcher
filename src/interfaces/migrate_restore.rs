@@ -6,8 +6,6 @@ pub trait MigrateRestoreTrait {
   fn migrate_restore(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _bos_file: Option<&str>,
     _cfs_file: Option<&str>,
     _hsm_file: Option<&str>,

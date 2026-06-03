@@ -6,8 +6,6 @@ pub trait MigrateBackupTrait {
   fn migrate_backup(
     &self,
     _shasta_token: &str,
-    _shasta_base_url: &str,
-    _shasta_root_cert: &[u8],
     _bos: Option<&str>,
     _destination: Option<&str>,
   ) -> impl Future<Output = Result<(), Error>> + Send {
