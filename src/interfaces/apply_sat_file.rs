@@ -127,40 +127,6 @@ pub struct ApplySessionTemplateParams<'a> {
 }
 
 pub trait SatTrait {
-  /// Apply a pre-rendered SAT file.
-  ///
-  /// See [`ApplySatFileParams`] for argument semantics. On success
-  /// returns `(configurations, images, session_templates, sessions)` —
-  /// the artifacts the backend created (or, when `params.dry_run` is
-  /// true, the artifacts it would have created). Empty vectors are
-  /// returned for sections absent from `params.sat_template_file_yaml`;
-  /// in particular `sessions` is empty unless `params.reboot` is true.
-  ///
-  /// The default implementation returns
-  /// [`Error::Message`](crate::error::Error::Message) so backends that
-  /// don't support SAT-file apply can be plugged in without
-  /// implementing the method.
-  fn apply_sat_file(
-    &self,
-    _params: ApplySatFileParams<'_>,
-  ) -> impl Future<
-    Output = Result<
-      (
-        Vec<CfsConfigurationResponse>,
-        Vec<Image>,
-        Vec<BosSessionTemplate>,
-        Vec<BosSession>,
-      ),
-      Error,
-    >,
-  > + Send {
-    async {
-      Err(Error::Message(
-        "Apply SAT file command not implemented for this backend".to_string(),
-      ))
-    }
-  }
-
   /// Apply a single SAT `configurations[]` entry.
   ///
   /// The backend validates the entry against live CSM state, converts
@@ -172,8 +138,7 @@ pub trait SatTrait {
   fn apply_configuration(
     &self,
     _params: ApplyConfigurationParams<'_>,
-  ) -> impl Future<Output = Result<CfsConfigurationResponse, Error>> + Send
-  {
+  ) -> impl Future<Output = Result<CfsConfigurationResponse, Error>> + Send {
     async {
       Err(Error::Message(
         "Apply configuration command not implemented for this backend"
