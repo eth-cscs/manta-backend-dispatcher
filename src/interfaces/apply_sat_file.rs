@@ -19,10 +19,7 @@ use crate::{
   error::Error,
   types::{
     bos::{session::BosSession, session_template::BosSessionTemplate},
-    cfs::{
-      cfs_configuration_response::CfsConfigurationResponse,
-      session::CfsSessionGetResponse,
-    },
+    cfs::cfs_configuration_response::CfsConfigurationResponse,
     ims::Image,
   },
 };
@@ -190,15 +187,15 @@ pub trait SatTrait {
   /// The backend validates the entry, resolves any `base.image_ref`
   /// against `params.ref_lookup`, constructs the CFS session that
   /// builds the image, runs it (unless `dry_run`), and returns the
-  /// created IMS image alongside the finished CFS session that
-  /// produced it. The session is returned (not dropped) so callers can
-  /// stamp provenance metadata onto the image without needing to
-  /// re-fetch the session by id.
+  /// created IMS image. Backends MAY stamp provenance metadata
+  /// (`manta.image_session.*`) onto the image as part of this call —
+  /// csm-rs does this for SAT-built images so the produced image is
+  /// self-describing — but this is an implementation detail and not
+  /// part of the trait contract.
   fn apply_image(
     &self,
     _params: ApplyImageParams<'_>,
-  ) -> impl Future<Output = Result<(Image, CfsSessionGetResponse), Error>> + Send
-  {
+  ) -> impl Future<Output = Result<Image, Error>> + Send {
     async {
       Err(Error::Message(
         "Apply image command not implemented for this backend".to_string(),
