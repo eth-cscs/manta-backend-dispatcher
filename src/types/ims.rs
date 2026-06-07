@@ -29,6 +29,12 @@ pub struct Image {
   pub arch: Option<String>,
   #[serde(skip_serializing_if = "Option::is_none")]
   pub metadata: Option<HashMap<String, String>>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub groups: Option<Vec<String>>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub base: Option<String>,
+  #[serde(skip_serializing_if = "Option::is_none")]
+  pub configuration: Option<String>,
 }
 
 pub struct PatchMetadata {
@@ -56,6 +62,9 @@ impl From<PatchImage> for Image {
       link: patch.link,
       arch: patch.arch,
       metadata: patch.metadata,
+      groups: None,
+      base: None,
+      configuration: None,
     }
   }
 }
