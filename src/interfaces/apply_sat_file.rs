@@ -19,7 +19,10 @@ use crate::{
   error::Error,
   types::{
     bos::{session::BosSession, session_template::BosSessionTemplate},
-    cfs::cfs_configuration_response::CfsConfigurationResponse,
+    cfs::{
+      cfs_configuration_response::CfsConfigurationResponse,
+      session::CfsSessionGetResponse,
+    },
     ims::Image,
   },
 };
@@ -111,6 +114,37 @@ pub struct ApplyImageParams<'a> {
   pub dry_run: bool,
 }
 
+/// Parameters for [`SatTrait::apply_sat_image_create_session`].
+///
+/// Splits the "create CFS session that builds the image" half of
+/// [`SatTrait::apply_image`] out into a discrete call so the CLI can
+/// drive the monitor + stamp steps itself.
+pub struct ApplyImageCreateSessionParams<'a> {
+  pub shasta_token: &'a str,
+  pub vault_base_url: &'a str,
+  pub site_name: &'a str,
+  pub k8s_api_url: &'a str,
+  /// One SAT `images[]` entry as a structured value.
+  pub image: serde_json::Value,
+  /// `ref_name.or(name) -> image_id` for previously-created images.
+  pub ref_lookup: HashMap<String, String>,
+  pub hsm_group_available_vec: &'a [String],
+  pub ansible_verbosity: Option<u8>,
+  pub ansible_passthrough: Option<&'a str>,
+  pub dry_run: bool,
+}
+
+/// Parameters for [`SatTrait::apply_sat_image_stamp_from_session`].
+///
+/// The other half of the split [`SatTrait::apply_image`] flow: given a
+/// terminal-complete CFS session, derive `manta.image_session.*` and
+/// PATCH it onto the resulting IMS image.
+pub struct ApplyImageStampParams<'a> {
+  pub shasta_token: &'a str,
+  /// Name of the CFS session whose result image should be stamped.
+  pub cfs_session_name: &'a str,
+}
+
 /// Parameters for [`SatTrait::apply_session_template`].
 pub struct ApplySessionTemplateParams<'a> {
   pub shasta_token: &'a str,
@@ -198,6 +232,54 @@ pub trait SatTrait {
     async {
       Err(Error::Message(
         "Apply image command not implemented for this backend".to_string(),
+      ))
+    }
+  }
+
+  /// Translate one SAT `images[]` entry into a CFS session payload and
+  /// create the session. The returned [`CfsSessionGetResponse`] is the
+  /// freshly-created session (initial status, no `result_id` yet);
+  /// callers drive it to completion themselves (via the session-status
+  /// or session-logs endpoints) and then call
+  /// [`SatTrait::apply_sat_image_stamp_from_session`] to stamp the
+  /// produced IMS image with `manta.image_session.*` provenance.
+  ///
+  /// This is the first half of the work [`SatTrait::apply_image`] does
+  /// monolithically; exposing it on its own lets the manta-cli own the
+  /// monitor + stamp orchestration while the backend stays the source
+  /// of truth for the SAT-image → CFS-session translation.
+  fn apply_sat_image_create_session(
+    &self,
+    _params: ApplyImageCreateSessionParams<'_>,
+  ) -> impl Future<Output = Result<CfsSessionGetResponse, Error>> + Send {
+    async {
+      Err(Error::Message(
+        "Apply SAT image (create-session) command not implemented for this backend"
+          .to_string(),
+      ))
+    }
+  }
+
+  /// Fetch the (terminal-complete) CFS session named by `params`,
+  /// derive `manta.image_session.{base,groups,configuration}` from it,
+  /// and PATCH them onto the IMS image the session produced.
+  ///
+  /// Errors with [`Error::Message`] if the session is not complete or
+  /// has no `result_id` — i.e. produced no image — so callers can fail
+  /// fast without attempting a PATCH against a non-existent image.
+  ///
+  /// This is the second half of [`SatTrait::apply_image`]'s work,
+  /// exposed separately so the manta-cli can decide *when* to stamp
+  /// (e.g. only after its own polling/log-streaming has observed the
+  /// session reach a terminal state).
+  fn apply_sat_image_stamp_from_session(
+    &self,
+    _params: ApplyImageStampParams<'_>,
+  ) -> impl Future<Output = Result<Image, Error>> + Send {
+    async {
+      Err(Error::Message(
+        "Apply SAT image (stamp-from-session) command not implemented for this backend"
+          .to_string(),
       ))
     }
   }
