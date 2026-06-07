@@ -119,6 +119,13 @@ pub struct ApplyImageParams<'a> {
 /// Splits the "create CFS session that builds the image" half of
 /// [`SatTrait::apply_image`] out into a discrete call so the CLI can
 /// drive the monitor + stamp steps itself.
+///
+/// No `hsm_group_available_vec` here — unlike `ApplyImageParams`,
+/// HSM-group access is enforced by the caller (manta-server's
+/// `post_sat_image_cfs_session` handler) before this call, via
+/// [`service::group::validate_hsm_group_access_many`] over the SAT
+/// entry's `configuration_group_names`. Backends are not expected to
+/// reproduce the check.
 pub struct ApplyImageCreateSessionParams<'a> {
   pub shasta_token: &'a str,
   pub vault_base_url: &'a str,
@@ -128,7 +135,6 @@ pub struct ApplyImageCreateSessionParams<'a> {
   pub image: serde_json::Value,
   /// `ref_name.or(name) -> image_id` for previously-created images.
   pub ref_lookup: HashMap<String, String>,
-  pub hsm_group_available_vec: &'a [String],
   pub ansible_verbosity: Option<u8>,
   pub ansible_passthrough: Option<&'a str>,
   pub dry_run: bool,
