@@ -215,7 +215,7 @@ pub trait SatTrait {
     }
   }
 
-  /// Apply a single SAT `images[]` entry.
+  /// Apply a single SAT `images[]` entry in one synchronous call.
   ///
   /// The backend validates the entry, resolves any `base.image_ref`
   /// against `params.ref_lookup`, constructs the CFS session that
@@ -225,6 +225,13 @@ pub trait SatTrait {
   /// csm-rs does this for SAT-built images so the produced image is
   /// self-describing — but this is an implementation detail and not
   /// part of the trait contract.
+  ///
+  /// Callers that want to observe the image build can instead drive
+  /// the two split methods themselves:
+  /// [`SatTrait::apply_sat_image_create_session`] kicks off the CFS
+  /// session, and [`SatTrait::apply_sat_image_stamp_from_session`]
+  /// fetches the now-complete session and stamps the produced IMS
+  /// image. Both paths share the same backend internals.
   fn apply_image(
     &self,
     _params: ApplyImageParams<'_>,
