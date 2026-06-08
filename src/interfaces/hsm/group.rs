@@ -32,20 +32,17 @@ pub trait GroupTrait {
     &self,
     _auth_token: &str,
     _hsm_name_vec: &[&str],
-  ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>>
-       + Send;
+  ) -> impl std::future::Future<
+    Output = Result<HashMap<String, Vec<String>>, Error>,
+  > + Send;
 
   fn get_group_map_and_filter_by_member_vec(
     &self,
     _auth_token: &str,
     _member_vec: &[&str],
-  ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>>
-       + Send;
-
-  fn get_all_groups(
-    &self,
-    _auth_token: &str,
-  ) -> impl std::future::Future<Output = Result<Vec<Group>, Error>> + Send;
+  ) -> impl std::future::Future<
+    Output = Result<HashMap<String, Vec<String>>, Error>,
+  > + Send;
 
   fn get_group(
     &self,
@@ -69,8 +66,9 @@ pub trait GroupTrait {
     &self,
     auth_token: &str,
     hsm_name_vec: &[&str],
-  ) -> impl std::future::Future<Output = Result<HashMap<String, Vec<String>>, Error>>
-       + Send;
+  ) -> impl std::future::Future<
+    Output = Result<HashMap<String, Vec<String>>, Error>,
+  > + Send;
 
   fn post_member(
     &self,
@@ -109,5 +107,5 @@ pub trait GroupTrait {
     new_target_hsm_members: &[&str],
     dryrun: bool,
   ) -> impl std::future::Future<Output = Result<(Vec<String>, Vec<String>), Error>>
-       + Send;
+  + Send;
 }
