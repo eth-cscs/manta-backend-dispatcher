@@ -62,7 +62,7 @@ pub trait GroupTrait {
     _hsm_group_label: &str,
   ) -> impl std::future::Future<Output = Result<HsmActionResponse, Error>> + Send;
 
-  fn get_hsm_map_and_filter_by_hsm_name_vec(
+  fn get_group_map_and_filter_by_group_name_vec(
     &self,
     auth_token: &str,
     hsm_name_vec: &[&str],
