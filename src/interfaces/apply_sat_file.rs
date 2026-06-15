@@ -166,6 +166,33 @@ pub struct ApplySessionTemplateParams<'a> {
   pub dry_run: bool,
 }
 
+/// Parameters for [`SatTrait::validate_sat_file`].
+///
+/// Subset of [`ApplySatFileParams`] — only the fields the validator
+/// reads. The SAT content travels as a structured
+/// `serde_json::Value` end-to-end, exactly like
+/// [`ApplySatFileParams::sat_file`].
+pub struct ValidateSatFileParams<'a> {
+  /// Bearer token authenticating the caller against the backend
+  /// (and against Vault when the backend fetches k8s creds).
+  pub shasta_token: &'a str,
+  /// Vault base URL — used to fetch the k8s secrets needed to read
+  /// the `cray-product-catalog` ConfigMap.
+  pub vault_base_url: &'a str,
+  /// Site identifier used to namespace the Vault path
+  /// (`manta/data/<site_name>/k8s`).
+  pub site_name: &'a str,
+  /// Kubernetes API URL — used to talk to the in-cluster product
+  /// catalog after the k8s creds have been fetched from Vault.
+  pub k8s_api_url: &'a str,
+  /// Parsed SAT file as a structured value (identical shape to
+  /// [`ApplySatFileParams::sat_file`]).
+  pub sat_file: serde_json::Value,
+  /// HSM groups the caller is allowed to target; SAT files
+  /// referencing groups outside this slice are rejected.
+  pub hsm_group_available_vec: &'a [String],
+}
+
 pub trait SatTrait {
   /// Apply a pre-rendered SAT file.
   ///
@@ -197,6 +224,30 @@ pub trait SatTrait {
     async {
       Err(Error::Message(
         "Apply SAT file command not implemented for this backend".to_string(),
+      ))
+    }
+  }
+
+  /// Validate a SAT file against the backend's live state without
+  /// mutating anything.
+  ///
+  /// Pre-flight check: returns `Ok(())` if the SAT file would
+  /// apply cleanly given the current state, or `Err(...)` with the
+  /// first detected mismatch (fail-fast). See the
+  /// `2026-06-15-sat-file-validate-endpoint` design doc for the
+  /// shape of the validator's checks.
+  ///
+  /// The default implementation returns
+  /// [`Error::Message`](crate::error::Error::Message) so backends
+  /// that don't support SAT validation can be plugged in without
+  /// implementing the method.
+  fn validate_sat_file(
+    &self,
+    _params: ValidateSatFileParams<'_>,
+  ) -> impl Future<Output = Result<(), Error>> + Send {
+    async {
+      Err(Error::Message(
+        "Validate SAT file command not implemented for this backend".to_string(),
       ))
     }
   }
