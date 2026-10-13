@@ -40,6 +40,13 @@ pub enum Error {
   // from CSM does not provide it
   #[error("Authentication token not found in {0}")]
   AuthenticationTokenNotFound(String),
+  /// The caller's credentials were rejected (e.g. an expired or
+  /// untrusted token); logging in again may fix it.
+  #[error("Unauthorized: {0}")]
+  Unauthorized(String),
+  /// The caller is authenticated but not permitted to do this.
+  #[error("Forbidden: {0}")]
+  Forbidden(String),
   #[error("Not found: {0}")]
   NotFound(String),
   #[error("Bad request: {0}")]
