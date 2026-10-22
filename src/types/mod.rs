@@ -11,7 +11,6 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use strum_macros::{AsRefStr, Display, EnumIter, EnumString, IntoStaticStr};
 
-
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum K8sAuth {
   #[serde(rename = "native")]

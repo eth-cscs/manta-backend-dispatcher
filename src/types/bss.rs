@@ -321,7 +321,9 @@ impl BootParameters {
     }
 
     if change == false {
-      log::debug!("No value change in kernel params. Checking is either new params have been added or removed");
+      log::debug!(
+        "No value change in kernel params. Checking is either new params have been added or removed"
+      );
       if new_params.len() != params.len() {
         log::info!("num kernel parameters have changed");
         change = true;
@@ -442,7 +444,10 @@ impl BootParameters {
             changed = true
           }
         } else {
-          log::info!("key '{}' already exists, the new kernel parameter won't be added since it already exists", key);
+          log::info!(
+            "key '{}' already exists, the new kernel parameter won't be added since it already exists",
+            key
+          );
         }
       } else {
         log::info!(
@@ -557,7 +562,9 @@ impl BootParameters {
     }
 
     if change == false {
-      log::debug!("No value change in kernel params. Checking is either new params have been added or removed");
+      log::debug!(
+        "No value change in kernel params. Checking is either new params have been added or removed"
+      );
       if new_params.len() != params.len() {
         log::info!("num kernel parameters have changed");
         change = true;

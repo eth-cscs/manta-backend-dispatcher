@@ -18,8 +18,8 @@ pub trait PCSTrait {
     _auth_token: &str,
     _operation: &str,
     _nodes: &[String],
-  ) -> impl std::future::Future<Output = Result<TransitionStartOutput, Error>>
-  + Send {
+  ) -> impl std::future::Future<Output = Result<TransitionStartOutput, Error>> + Send
+  {
     async {
       Err(Error::Message(
         "pcs_transitions_post not implemented for this backend".to_string(),
