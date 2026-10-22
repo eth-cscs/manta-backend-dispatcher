@@ -1,3 +1,5 @@
+use std::{fmt, str::FromStr};
+
 use serde::{Deserialize, Serialize};
 
 use crate::error::Error;
@@ -33,16 +35,20 @@ pub enum Operation {
   Shutdown,
 }
 
-impl Operation {
-  pub fn to_string(&self) -> String {
-    match self {
-      Operation::Boot => "boot".to_string(),
-      Operation::Reboot => "reboot".to_string(),
-      Operation::Shutdown => "shutdown".to_string(),
-    }
+impl fmt::Display for Operation {
+  fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    f.write_str(match self {
+      Operation::Boot => "boot",
+      Operation::Reboot => "reboot",
+      Operation::Shutdown => "shutdown",
+    })
   }
+}
 
-  pub fn from_str(operation: &str) -> Result<Operation, Error> {
+impl FromStr for Operation {
+  type Err = Error;
+
+  fn from_str(operation: &str) -> Result<Operation, Error> {
     match operation {
       "boot" => Ok(Operation::Boot),
       "reboot" => Ok(Operation::Reboot),

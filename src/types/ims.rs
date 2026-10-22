@@ -69,12 +69,12 @@ impl From<PatchImage> for Image {
   }
 }
 
-impl Into<PatchImage> for Image {
-  fn into(self) -> PatchImage {
+impl From<Image> for PatchImage {
+  fn from(val: Image) -> Self {
     PatchImage {
-      link: self.link,
-      arch: self.arch,
-      metadata: self.metadata,
+      link: val.link,
+      arch: val.arch,
+      metadata: val.metadata,
     }
   }
 }

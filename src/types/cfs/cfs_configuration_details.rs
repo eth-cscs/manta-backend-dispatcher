@@ -62,7 +62,7 @@ impl LayerDetails {
     // most_recent_commit: bool,
   ) -> Self {
     Self {
-      name: name,
+      name,
       repo_name: String::from(repo_name),
       commit_id: String::from(commit_id),
       author: String::from(author),

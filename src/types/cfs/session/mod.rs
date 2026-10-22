@@ -144,9 +144,8 @@ impl CfsSessionGetResponse {
         .artifacts
         .as_ref()
         .unwrap_or(&Vec::new())
-        .into_iter()
-        .filter(|artifact| artifact.result_id.is_some())
-        .map(|artifact| artifact.result_id.clone().unwrap())
+        .iter()
+        .filter_map(|artifact| artifact.result_id.clone())
         .collect()
     } else {
       Vec::new()
@@ -155,7 +154,7 @@ impl CfsSessionGetResponse {
 
   /// Returns list of result_ids
   pub fn get_first_result_id(&self) -> Option<String> {
-    CfsSessionGetResponse::get_result_id_vec(&self)
+    CfsSessionGetResponse::get_result_id_vec(self)
       .first()
       .cloned()
   }

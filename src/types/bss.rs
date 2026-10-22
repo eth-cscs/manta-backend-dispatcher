@@ -39,7 +39,7 @@ impl BootParameters {
   // - craycps-s3:s3://boot-images/59e0180a-3fdd-4936-bba7-14ba914ffd34/rootfs:3dfae8d1fa3bb2bfb18152b4f9940ad0-667:dvs:api-gw-service-nmn.local:300:nmn0,hsn0:0
   // - url=s3://boot-images/59e0180a-3fdd-4936-bba7-14ba914ffd34/rootfs,etag=3dfae8d1fa3bb2bfb18152b4f9940ad0-667 bos_update_frequency=4h
   pub fn get_image_id_from_s3_path(s3_path: &str) -> Option<&str> {
-    s3_path.split("/").skip(3).next()
+    s3_path.split("/").nth(3)
   }
 
   pub fn get_kernel_params(&self) -> HashMap<&str, &str> {
@@ -132,7 +132,7 @@ impl BootParameters {
       }
     }
 
-    return "".to_string();
+    "".to_string()
   }
 
   /// Update boot image in kernel boot parameters and also in kernel and initrd fields if
@@ -173,7 +173,7 @@ impl BootParameters {
           changed = true;
         }
         // Replace image id in `root` kernel parameter with new value
-        *current_image_id = &new_image_id;
+        *current_image_id = new_image_id;
       }
     }
 
@@ -215,7 +215,7 @@ impl BootParameters {
 
       for substring in &mut metal_server_kernel_param {
         if uuid::Uuid::try_parse(substring).is_ok() {
-          *substring = &new_image_id;
+          *substring = new_image_id;
           changed = true;
         }
       }
@@ -238,7 +238,6 @@ impl BootParameters {
           kernel_param.split_once('=').unwrap_or((kernel_param, ""))
         })
         .collect();
-    } else {
     };
 
     // replace image id in 'nmd_data' kernel param
@@ -250,7 +249,7 @@ impl BootParameters {
 
       for substring in &mut nmd_kernel_param_vec {
         if uuid::Uuid::try_parse(substring).is_ok() {
-          *substring = &new_image_id;
+          *substring = new_image_id;
           changed = true;
         }
       }
@@ -271,7 +270,6 @@ impl BootParameters {
         .and_modify(|nmd_param| *nmd_param = &new_nmd_kernel_param);
 
       self.update_kernel_param("nmd_data", &new_nmd_kernel_param);
-    } else {
     };
 
     self.kernel = format!("s3://boot-images/{}/kernel", new_image_id);
@@ -284,6 +282,7 @@ impl BootParameters {
   /// Set a str of kernel parameters:
   ///  - if kernel parameter already exists, then it will be updated
   ///  - if kernel parameter does not exists, then it will be added
+  ///
   /// Returns true if kernel params have change
   pub fn update_kernel_params(&mut self, new_params: &str) -> bool {
     let mut change = false;
@@ -320,7 +319,7 @@ impl BootParameters {
       }
     }
 
-    if change == false {
+    if !change {
       log::debug!(
         "No value change in kernel params. Checking is either new params have been added or removed"
       );
@@ -412,7 +411,8 @@ impl BootParameters {
 
   /// Add a kernel parameter:
   ///  - if kernel parameter does not exists, then it will be added,
-  /// otherwise nothing will change
+  ///    otherwise nothing will change
+  ///
   /// Returns true if kernel params have change
   pub fn add_kernel_params(
     &mut self,
@@ -504,7 +504,7 @@ impl BootParameters {
     for (key, _value) in kernel_params_to_delete_tuple {
       log::debug!("key '{}' to be removed", key);
 
-      changed = changed | params.remove(key).is_some();
+      changed |= params.remove(key).is_some();
 
       if changed {
         log::debug!("key '{}' removed", key);
@@ -530,6 +530,7 @@ impl BootParameters {
 
   /// Apply a str of kernel parameters:
   ///  - current kernel params will be ignored/removed and replaced by the new ones
+  ///
   /// Returns true if kernel params have change
   // FIXME: integrate fixed introduced in methods 'add_kernel_param' and 'delete_kernel_param'
   pub fn apply_kernel_params(&mut self, new_params: &str) -> bool {
@@ -561,7 +562,7 @@ impl BootParameters {
       }
     }
 
-    if change == false {
+    if !change {
       log::debug!(
         "No value change in kernel params. Checking is either new params have been added or removed"
       );
