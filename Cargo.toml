@@ -1,6 +1,6 @@
 [package]
 name = "manta-backend-dispatcher"
-version = "1.0.0-beta.15"
+version = "1.0.0-beta.16"
 edition = "2024"
 rust-version = "1.99.1"
 license-file = "LICENSE"
