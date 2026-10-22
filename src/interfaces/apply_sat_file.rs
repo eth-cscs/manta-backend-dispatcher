@@ -123,7 +123,7 @@ pub struct ApplyImageParams<'a> {
 /// No `hsm_group_available_vec` here — unlike `ApplyImageParams`,
 /// HSM-group access is enforced by the caller (manta-server's
 /// `post_sat_image_cfs_session` handler) before this call, via
-/// [`service::group::validate_hsm_group_access_many`] over the SAT
+/// `service::group::validate_hsm_group_access_many` over the SAT
 /// entry's `configuration_group_names`. Backends are not expected to
 /// reproduce the check.
 pub struct ApplyImageCreateSessionParams<'a> {
@@ -177,7 +177,7 @@ pub trait SatTrait {
   /// in particular `sessions` is empty unless `params.reboot` is true.
   ///
   /// The default implementation returns
-  /// [`Error::Message`](crate::error::Error::Message) so backends that
+  /// [`Error::Message`] so backends that
   /// don't support SAT-file apply can be plugged in without
   /// implementing the method.
   fn apply_sat_file(
