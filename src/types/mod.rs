@@ -247,8 +247,8 @@ impl From<HWInvByLocNode> for NodeSummary {
   }
 }
 
-impl Into<HWInvByLocNode> for NodeSummary {
-  fn into(self) -> HWInvByLocNode {
+impl From<NodeSummary> for HWInvByLocNode {
+  fn from(val: NodeSummary) -> Self {
     let redfish_system_fru_info = RedfishSystemFRUInfo {
       asset_tag: None,
       bios_version: None,
@@ -265,26 +265,26 @@ impl Into<HWInvByLocNode> for NodeSummary {
       fru_id: None,
       r#type: None,
       fru_sub_type: None,
-      hw_inventory_by_fru_type: self.r#type.clone(),
+      hw_inventory_by_fru_type: val.r#type.clone(),
       node_fru_info: redfish_system_fru_info,
     };
 
     HWInvByLocNode {
-      id: self.xname,
-      r#type: Some(self.r#type.clone()),
+      id: val.xname,
+      r#type: Some(val.r#type.clone()),
       ordinal: None,
       status: None,
       populated_fru: Some(hw_inv_by_fr_node),
       node_location_info: None,
       processors: Some(
-        self
+        val
           .processors
           .into_iter()
           .map(|processor| processor.into())
           .collect(),
       ),
       node_accels: Some(
-        self
+        val
           .node_accels
           .into_iter()
           .map(|node_accel| node_accel.into())
@@ -292,15 +292,11 @@ impl Into<HWInvByLocNode> for NodeSummary {
       ),
       drives: None,
       memory: Some(
-        self
-          .memory
-          .into_iter()
-          .map(|memory| memory.into())
-          .collect(),
+        val.memory.into_iter().map(|memory| memory.into()).collect(),
       ),
       node_accel_risers: None,
       node_hsn_nics: Some(
-        self
+        val
           .node_hsn_nics
           .into_iter()
           .map(|node_hsn_nic| node_hsn_nic.into())
@@ -378,13 +374,13 @@ impl From<HWInvByLocProcessor> for ArtifactSummary {
   }
 }
 
-impl Into<HWInvByLocProcessor> for ArtifactSummary {
-  fn into(self) -> HWInvByLocProcessor {
+impl From<ArtifactSummary> for HWInvByLocProcessor {
+  fn from(val: ArtifactSummary) -> Self {
     let redfish_process_fru_info = RedfishProcessorFRUInfo {
       instruction_set: None,
       manufacturer: None,
       max_speed_mhz: None,
-      model: self.info,
+      model: val.info,
       processor_architecture: None,
       processor_id: None,
       processor_type: None,
@@ -394,9 +390,9 @@ impl Into<HWInvByLocProcessor> for ArtifactSummary {
 
     let hw_inv_by_fru_processor = HWInvByFRUProcessor {
       fru_id: None,
-      r#type: Some(self.r#type.to_string()),
+      r#type: Some(val.r#type.to_string()),
       fru_sub_type: None,
-      hw_inventory_by_fru_type: self.r#type.to_string(),
+      hw_inventory_by_fru_type: val.r#type.to_string(),
       processor_fru_info: redfish_process_fru_info,
     };
 
@@ -408,8 +404,8 @@ impl Into<HWInvByLocProcessor> for ArtifactSummary {
     };
 
     HWInvByLocProcessor {
-      id: self.xname,
-      r#type: Some(self.r#type.to_string()),
+      id: val.xname,
+      r#type: Some(val.r#type.to_string()),
       ordinal: None,
       status: None,
       populated_fru: Some(hw_inv_by_fru_processor),
@@ -433,12 +429,12 @@ impl From<HWInvByLocMemory> for ArtifactSummary {
   }
 }
 
-impl Into<HWInvByLocMemory> for ArtifactSummary {
-  fn into(self) -> HWInvByLocMemory {
+impl From<ArtifactSummary> for HWInvByLocMemory {
+  fn from(val: ArtifactSummary) -> Self {
     let redfish_memory_fru_info = RedfishMemoryFRUInfo {
       base_module_type: None,
       bus_width_bits: None,
-      capacity_mib: self.info.map(|info| usize::from_str(&info).unwrap_or(0)), // FIXME:
+      capacity_mib: val.info.map(|info| usize::from_str(&info).unwrap_or(0)), // FIXME:
       // settings memory capacity to 0 if any issue... this does not look ok...
       data_width_bits: None,
       error_correction: None,
@@ -453,9 +449,9 @@ impl Into<HWInvByLocMemory> for ArtifactSummary {
 
     let hw_inv_by_fru_memory = HWInvByFRUMemory {
       fru_id: None,
-      r#type: Some(self.r#type.to_string()),
+      r#type: Some(val.r#type.to_string()),
       fru_sub_type: None,
-      hw_inventory_by_fru_type: self.r#type.to_string(),
+      hw_inventory_by_fru_type: val.r#type.to_string(),
       memory_fru_info: redfish_memory_fru_info,
     };
 
@@ -474,8 +470,8 @@ impl Into<HWInvByLocMemory> for ArtifactSummary {
     };
 
     HWInvByLocMemory {
-      id: self.xname,
-      r#type: Some(self.r#type.to_string()),
+      id: val.xname,
+      r#type: Some(val.r#type.to_string()),
       ordinal: None,
       status: None,
       populated_fru: Some(hw_inv_by_fru_memory),
@@ -496,15 +492,15 @@ impl From<HWInvByLocNodeAccel> for ArtifactSummary {
   }
 }
 
-impl Into<HWInvByLocNodeAccel> for ArtifactSummary {
-  fn into(self) -> HWInvByLocNodeAccel {
+impl From<ArtifactSummary> for HWInvByLocNodeAccel {
+  fn from(val: ArtifactSummary) -> Self {
     // NOTE: yes, sounds weird FRU for node accelerator uses FRU for processor... but that is
     // what the API docs says...
     let redfish_processor_fru_info = RedfishProcessorFRUInfo {
       instruction_set: None,
       manufacturer: None,
       max_speed_mhz: None,
-      model: self.info,
+      model: val.info,
       processor_architecture: None,
       processor_id: None,
       processor_type: None,
@@ -514,15 +510,15 @@ impl Into<HWInvByLocNodeAccel> for ArtifactSummary {
 
     let hw_inv_by_fru_node_accel = HWInvByFRUNodeAccel {
       fru_id: None,
-      r#type: Some(self.r#type.to_string()),
+      r#type: Some(val.r#type.to_string()),
       fru_sub_type: None,
-      hw_inventory_by_fru_type: self.r#type.to_string(),
+      hw_inventory_by_fru_type: val.r#type.to_string(),
       node_accel_fru_info: redfish_processor_fru_info,
     };
 
     HWInvByLocNodeAccel {
-      id: self.xname,
-      r#type: Some(self.r#type.to_string()),
+      id: val.xname,
+      r#type: Some(val.r#type.to_string()),
       ordinal: None,
       status: None,
       populated_fru: Some(hw_inv_by_fru_node_accel),
@@ -543,13 +539,13 @@ impl From<HWInvByLocHSNNIC> for ArtifactSummary {
   }
 }
 
-impl Into<HWInvByLocHSNNIC> for ArtifactSummary {
-  fn into(self) -> HWInvByLocHSNNIC {
+impl From<ArtifactSummary> for HWInvByLocHSNNIC {
+  fn from(val: ArtifactSummary) -> Self {
     // NOTE: yes, sounds weird FRU for node accelerator uses FRU for processor... but that is
     // what the API docs says...
     let hsn_nic_fru_info = HSNNICFRUInfo {
       manufacturer: None,
-      model: self.info,
+      model: val.info,
       part_number: None,
       sku: None,
       serial_number: None,
@@ -557,9 +553,9 @@ impl Into<HWInvByLocHSNNIC> for ArtifactSummary {
 
     let hw_inv_by_fru_hsn_nic = HWInvByFRUHSNNIC {
       fru_id: None,
-      r#type: Some(self.r#type.to_string()),
+      r#type: Some(val.r#type.to_string()),
       fru_sub_type: None,
-      hw_inventory_by_fru_type: self.r#type.to_string(),
+      hw_inventory_by_fru_type: val.r#type.to_string(),
       hsn_nic_fru_info,
     };
 
@@ -570,8 +566,8 @@ impl Into<HWInvByLocHSNNIC> for ArtifactSummary {
     };
 
     HWInvByLocHSNNIC {
-      id: self.xname,
-      r#type: Some(self.r#type.to_string()),
+      id: val.xname,
+      r#type: Some(val.r#type.to_string()),
       ordinal: None,
       status: None,
       populated_fru: Some(hw_inv_by_fru_hsn_nic),
@@ -665,23 +661,17 @@ impl Group {
     tag_vec_opt: Option<Vec<String>>,
     exclusive_opt: Option<String>,
   ) -> Self {
-    let members_opt = if let Some(member_vec) = member_vec_opt {
-      Some(Member {
-        ids: Some(member_vec),
-      })
-    } else {
-      None
-    };
+    let members_opt = member_vec_opt.map(|member_vec| Member {
+      ids: Some(member_vec),
+    });
 
-    let group = Self {
+    Self {
       label: label.to_string(),
       description,
       tags: tag_vec_opt,
       members: members_opt,
       exclusive_group: exclusive_opt,
-    };
-
-    group
+    }
   }
 
   /// Get group members
@@ -1975,6 +1965,9 @@ pub struct NodeLocationInfo {
 // Internally tagged: the wire format puts the discriminator in the
 // `HWInventoryByLocationType` field alongside the variant's other fields.
 // Tag value matches the Rust variant name (e.g. `HWInvByLocCabinet`).
+// Variant sizes differ a lot (HWInvByLocNode is large). Boxing it would
+// change how backends build and match this enum, so accept the size.
+#[allow(clippy::large_enum_variant)]
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(tag = "HWInventoryByLocationType")]
 pub enum HWInventoryByLocation {
