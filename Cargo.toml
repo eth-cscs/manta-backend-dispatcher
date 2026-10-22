@@ -9,6 +9,11 @@ documentation = "https://github.com/eth-cscs/manta-backend-dispatcher/blob/main/
 homepage = "https://github.com/eth-cscs/manta-backend-dispatcher/blob/main/README.md"
 repository = "https://github.com/eth-cscs/manta-backend-dispatcher"
 
+# strum_macros' EnumIter/EnumString expand to `::strum::...` paths, which
+# cargo-machete can't see.
+[package.metadata.cargo-machete]
+ignored = ["strum"]
+
 [dependencies]
 reqwest = { version = "0.12.15", default-features = false, features = ["blocking", "json", "rustls-tls"] }
 serde = { version = "1.0.219", features = ["derive"] }
@@ -16,15 +21,15 @@ serde_json = "1.0.140"
 thiserror = "2.0.12"
 log = "0.4.27"
 uuid = "1.16.0"
-strum = { version = "0.27.1", default-features = false }
-strum_macros = "0.27.1"
+strum = { version = "0.28.0", default-features = false }
+strum_macros = "0.28.0"
 futures-io = "0.3.31"
-utoipa = { version = "5.5" }
+utoipa = { version = "6.0" }
 tokio = { version = "1.45", features = ["macros", "rt-multi-thread"] }
 serde_yaml = "0.9.34"
 chrono = { version = "0.4.43"}
-toml = "0.8"
-toml_edit = "0.22"
+toml = "1.1"
+toml_edit = "0.25"
 config = { version = "0.15", default-features = false }
 dialoguer = { version = "0.12", default-features = false }
 
